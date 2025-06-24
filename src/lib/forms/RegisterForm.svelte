@@ -41,12 +41,12 @@
          placeholder='Bear'
       />
       <TextInput
-         bind:value={$form.organizationName}
-         errors={$errors.organizationName}
-         constraints={$constraints.organizationName}
-         label='Organization name (optional)'
-         name='organizationName'
-         placeholder='The Forrest'
+         bind:value={$form.companyName}
+         errors={$errors.companyName}
+         constraints={$constraints.companyName}
+         label='Company name'
+         name='companyName'
+         placeholder='Acme Self Storage'
       />
       <EmailInput
          label="Email"
@@ -54,7 +54,7 @@
          bind:value={$form.email}
          errors={$errors.email}
          constraints={$constraints.email}
-         placeholder='smokeybear@theforest.email'
+         placeholder='smokeybear@acmeselfstorage.email'
       />
       <EmailInput
          label="Confirm email"
@@ -62,7 +62,7 @@
          bind:value={$form.emailConfirm}
          errors={$errors.emailConfirm}
          constraints={$constraints.emailConfirm}
-         placeholder='smokeybear@theforest.email'
+         placeholder='smokeybear@acmeselfstorage.email'
       />
       <FormSubmitWithProgress delayed={$delayed} timeout={$timeout}/>
    </form>
