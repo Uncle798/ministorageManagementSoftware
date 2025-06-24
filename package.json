@@ -42,5 +42,8 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"@vercel/sdk": "^1.8.5"
 	}
 }

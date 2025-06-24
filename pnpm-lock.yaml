@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@vercel/sdk':
+        specifier: ^1.8.5
+        version: 1.8.5(zod@3.25.67)
     devDependencies:
       '@eslint/compat':
         specifier: ^1.2.5
@@ -662,6 +666,16 @@ packages:
   '@typescript-eslint/visitor-keys@8.35.0':
     resolution: {integrity: sha512-zTh2+1Y8ZpmeQaQVIc/ZZxsx8UzgKJyNg1PTvjzC7WMhPSVS8bfDX34k1SrwOf016qd5RU3az2UxUNue3IfQ5g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@vercel/sdk@1.8.5':
+    resolution: {integrity: sha512-LIvWg9w3heznGkNfOKJDemG/I/wQjlXOyIcHZL7YeTxBvzAOt7HolNJWCiRQyZQACKp5s9IDIYd+37ePIJ09mg==}
+    hasBin: true
+    peerDependencies:
+      '@modelcontextprotocol/sdk': '>=1.5.0 <1.10.0'
+      zod: '>= 3'
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
 
   '@zag-js/accordion@1.17.0':
     resolution: {integrity: sha512-naNXyBfnAFsYM0w6qdHFrIeM+GzWIHQiAulAlM41UggALf6OknCSmcLg1CmOR2yNfi2R1I6em1b/HnatUQnRIA==}
@@ -1585,6 +1599,9 @@ packages:
   zimmerframe@1.1.2:
     resolution: {integrity: sha512-rAbqEGa8ovJy4pyBxZM70hg4pE6gDgaQ0Sl9M3enG3I0d6H4XSAM3GeNGLKnsBpuijUow064sf7ww1nutC5/3w==}
 
+  zod@3.25.67:
+    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+
 snapshots:
 
   '@ampproject/remapping@2.3.0':
@@ -2093,6 +2110,10 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.35.0
       eslint-visitor-keys: 4.2.1
+
+  '@vercel/sdk@1.8.5(zod@3.25.67)':
+    dependencies:
+      zod: 3.25.67
 
   '@zag-js/accordion@1.17.0':
     dependencies:
@@ -3018,3 +3039,5 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   zimmerframe@1.1.2: {}
+
+  zod@3.25.67: {}
