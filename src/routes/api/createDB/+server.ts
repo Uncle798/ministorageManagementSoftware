@@ -11,10 +11,10 @@ export const POST: RequestHandler = async () => {
       method: 'POST',
       body: JSON.stringify({
          branch:{
-            
+
          }
       })
-   });
+   }).then(async(res) => await res.json());
    console.log(neonResponse)
    return new Response(null, {status:200});
 };
