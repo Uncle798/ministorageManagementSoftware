@@ -31,8 +31,10 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
+		"prisma": "^6.10.1",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
+		"sveltekit-superforms": "^2.27.0",
 		"tailwindcss": "^4.0.0",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.20.0",
@@ -41,9 +43,21 @@
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"esbuild"
+		],
+		"ignoredBuiltDependencies": [
+			"@prisma/client"
 		]
 	},
 	"dependencies": {
-		"@vercel/sdk": "^1.8.5"
+		"@oslojs/crypto": "^1.0.1",
+		"@oslojs/encoding": "^1.1.0",
+		"@oslojs/oauth2": "^0.5.0",
+		"@prisma/client": "^6.10.1",
+		"@upstash/ratelimit": "^2.0.5",
+		"@upstash/redis": "^1.35.0",
+		"@vercel/sdk": "^1.8.5",
+		"dayjs": "^1.11.13",
+		"mailtrap": "^4.1.0",
+		"valibot": "^1.1.0"
 	}
 }
