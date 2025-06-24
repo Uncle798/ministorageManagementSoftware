@@ -1,3 +1,11 @@
+<script lang="ts">
+	import type { PageData } from "./$types";
+
+   interface Props {
+      data: PageData
+   }
+   let { data }:Props = $props();
+</script>
 <div>
    <h1>Welcome to Ministorage Management Software</h1>
    <p>
@@ -9,14 +17,16 @@
    <p>
 
    </p>
-   <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
-      await fetch('/api/createDB', {
-         method: 'POST'
-      })
-   }}>create branch</button>
-   <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
-      await fetch('/api/listBranches', {
-         method: 'GET'
-      })
-   }}>list branches</button>
+   {#if data.user?.admin}  
+      <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
+         await fetch('/api/createDB', {
+            method: 'POST'
+         })
+      }}>create branch</button>
+      <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
+         await fetch('/api/listBranches', {
+            method: 'GET'
+         })
+      }}>list branches</button>
+   {/if}
 </div>
