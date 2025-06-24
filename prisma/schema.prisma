@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTSQL_ADDRESS")
+}
+
+model User {
+  id            String         @id @unique() @default(cuid(2))
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt()
+  email         String         @unique()
+  givenName     String
+  familyName    String
+  companyName   String
+  emailVerified Boolean        @default(false)
+  googleId      String?
+  yahooId       String?
+  session       Session[]
+  verification  Verification[]
+
+  @@unique([id, email])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Verification {
+  id        String   @id @default(cuid(2))
+  code      String
+  userId    String   @map("user_id")
+  email     String
+  expiresAt DateTime @map("expires_at")
+  user      User     @relation(fields: [userId, email], references: [id, email])
+
+  @@map("verification")
+}
+
+model MagicLink {
+  tokenHash String   @unique @map("token_hash")
+  email     String
+  expiresAt DateTime @map("expires_at")
+}
