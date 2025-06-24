@@ -22,6 +22,7 @@ model User {
   familyName    String
   companyName   String
   emailVerified Boolean        @default(false)
+  admin         Boolean        @default(false)
   googleId      String?
   yahooId       String?
   session       Session[]
