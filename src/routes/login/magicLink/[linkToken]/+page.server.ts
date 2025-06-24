@@ -33,23 +33,28 @@ export const load = (async (event) => {
    switch (redirectTo) {
       case 'home':
          redirect(303, '/');
+         break;
       case 'newLease':
          redirect(302, `/newLease?unitNum=${unitNum}`);
+         break;
       case 'units':
          if(unitNum){
             redirect(302, `/units/${unitNum}`);
          }
          redirect(302, '/units');
+         break;
       case 'invoice':
          if(invoiceNum){
             redirect(302, `/invoices/${invoiceNum}`);
          }
          redirect(302, `/invoices`);
+         break;
       case 'paymentRecord':
          if(paymentRecordNum){
             redirect(302, `/paymentRecords/${paymentRecordNum}`);
          }
          redirect(302, '/paymentRecords');
+         break;
       default:
          redirect(302, '/');
    }
