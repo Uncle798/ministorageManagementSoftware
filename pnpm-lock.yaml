@@ -17,6 +17,9 @@ importers:
       '@oslojs/oauth2':
         specifier: ^0.5.0
         version: 0.5.0
+      '@pilcrowjs/object-parser':
+        specifier: ^0.0.4
+        version: 0.0.4
       '@prisma/client':
         specifier: ^6.10.1
         version: 6.10.1(prisma@6.10.1(typescript@5.8.3))(typescript@5.8.3)
@@ -434,6 +437,9 @@ packages:
 
   '@oslojs/oauth2@0.5.0':
     resolution: {integrity: sha512-t70+e4EgnzTbU4MrUWXzqWN2A6RJrlSSvwwuBv6E0Ap6/nsIXrjsdRWeTcSvvXTcC6fi0YdWaqEWLipcEm2Cgw==}
+
+  '@pilcrowjs/object-parser@0.0.4':
+    resolution: {integrity: sha512-mBy3FMv2lvl/sZX/q03wvl3Km8FWg7kbrqQ/qMxK49uZcBssD76Js5k+o7VuCDJI8SNvsrbIX8y6vclx7bWeSg==}
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
@@ -2269,6 +2275,8 @@ snapshots:
       '@oslojs/encoding': 0.4.1
 
   '@oslojs/oauth2@0.5.0': {}
+
+  '@pilcrowjs/object-parser@0.0.4': {}
 
   '@polka/url@1.0.0-next.29': {}
 
