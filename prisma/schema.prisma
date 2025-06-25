@@ -14,21 +14,35 @@ datasource db {
 }
 
 model User {
-  id            String         @id @unique() @default(cuid(2))
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt()
-  email         String         @unique()
-  givenName     String
-  familyName    String
-  companyName   String
-  emailVerified Boolean        @default(false)
-  admin         Boolean        @default(false)
-  googleId      String?
-  yahooId       String?
-  session       Session[]
-  verification  Verification[]
+  id               String             @id @unique() @default(cuid(2))
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt()
+  email            String             @unique()
+  givenName        String
+  familyName       String
+  companyName      String?
+  emailVerified    Boolean            @default(false)
+  admin            Boolean            @default(false)
+  googleId         String?
+  yahooId          String?
+  session          Session[]
+  verification     Verification[]
+  DatabaseBranch   DatabaseBranch[]
+  VercelDeployment VercelDeployment[]
 
   @@unique([id, email])
+}
+
+model DatabaseBranch {
+  id     String @id @unique @default(cuid(2))
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model VercelDeployment {
+  id     String @id @unique @default(cuid(2))
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Session {
