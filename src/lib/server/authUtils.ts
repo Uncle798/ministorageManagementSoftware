@@ -164,8 +164,18 @@ export async function verifyMagicLink(code:string):Promise<string> {
       return 'not found'
    }
    if(dayjs(new Date()).diff(magicLink.expiresAt) >= 0){
+      await prisma.magicLink.delete({
+         where: {
+            tokenHash: codeHash
+         }
+      })
       return 'expired'
    }
+   await prisma.magicLink.delete({
+      where: {
+         tokenHash: codeHash
+      }
+   })
    return magicLink.email
 }
 
