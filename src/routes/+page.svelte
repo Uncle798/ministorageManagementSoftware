@@ -1,10 +1,23 @@
 <script lang="ts">
+	import { ObjectParser } from "@pilcrowjs/object-parser";
 	import type { PageData } from "./$types";
 
    interface Props {
       data: PageData
    }
    let { data }:Props = $props();
+   let branchElement = $state<HTMLDivElement>();
+   const getBranches = async function () {
+      const res = await fetch('/api/listBranches', {
+            method: 'GET'
+         }).then(async (res) => {
+            return await res.json()
+         })
+      const parser = new ObjectParser(res);
+      if(res){
+         parser
+      }
+   }
 </script>
 <div>
    <h1>Welcome to Ministorage Management Software</h1>
@@ -19,14 +32,19 @@
    </p>
    {#if data.user?.admin}  
       <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
+         console.log(data.user?.id)
          await fetch('/api/createDB', {
-            method: 'POST'
+            method: 'POST',
+            body: JSON.stringify({userId: data.user?.id})
          })
       }}>create branch</button>
-      <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
-         await fetch('/api/listBranches', {
-            method: 'GET'
+      <button class="btn preset-filled-primary-50-950" onclick={()=>getBranches()}>list branches</button>
+      <div bind:this={branchElement}></div>
+      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
+         await fetch('/api/deleteBranch', {
+            method: 'POST',
+            body: JSON.stringify({userId:data.user?.id})
          })
-      }}>list branches</button>
+      }}>delete branch</button>
    {/if}
 </div>

@@ -13,5 +13,5 @@ export const GET: RequestHandler = async () => {
       return await res.json();
    })
    console.log(neonRes)
-   return new Response();
+   return new Response(JSON.stringify(neonRes), {status: 200});
 };
