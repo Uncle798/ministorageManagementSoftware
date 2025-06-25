@@ -35,14 +35,16 @@ model User {
 
 model DatabaseBranch {
   id     String @id @unique @default(cuid(2))
+  neonId String
   user   User   @relation(fields: [userId], references: [id])
   userId String
 }
 
 model VercelDeployment {
-  id     String @id @unique @default(cuid(2))
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  id       String  @id @unique @default(cuid(2))
+  vercelId String?
+  user     User    @relation(fields: [userId], references: [id])
+  userId   String
 }
 
 model Session {
