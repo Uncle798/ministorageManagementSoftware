@@ -1,20 +1,34 @@
-import { NEON_API_KEY, NEON_PROJECT_ID } from '$env/static/private';
+import { NEON_PROJECT_ID } from '$env/static/private';
+import { neonClient } from '$lib/server/neon';
+import { prisma } from '$lib/server/prisma';
+import { EndpointType } from '@neondatabase/api-client';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async () => {
-   const headers = new Headers();
-   headers.append('Accept', 'application/json');
-   headers.append('Authorization', `Bearer ${NEON_API_KEY}`);
-   headers.append('Content-Type', 'application/json')
-   const neonResponse = await fetch(`https://console.neon.tech/api/v2/projects/${NEON_PROJECT_ID}/branches`, {
-      headers,
-      method: 'POST',
-      body: JSON.stringify({
-         branch:{
-
+export const POST: RequestHandler = async (event) => {
+   const body = await event.request.json();
+   const { userId } = body;
+   if(!userId){
+      return new Response(JSON.stringify('User Id not provided'), {status: 400});
+   }
+   const dbBranch = await prisma.databaseBranch.create({
+      data: {
+         userId,
+      }
+   });
+   const branch = await neonClient.createProjectBranch(NEON_PROJECT_ID, {
+      endpoints: [
+         {
+            type:  EndpointType.ReadWrite,
+            provisioner: 'k8s-neonvm',
+            autoscaling_limit_min_cu: 0.25,
+            autoscaling_limit_max_cu: 2,
          }
-      })
-   }).then(async(res) => await res.json());
-   console.log(neonResponse)
+      ],
+      branch: {
+         parent_id: 'br-plain-feather-aabanb4l',
+         name: dbBranch.id
+      }
+   })
+   console.log(branch);
    return new Response(null, {status:200});
 };
