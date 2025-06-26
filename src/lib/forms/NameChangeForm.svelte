@@ -41,12 +41,12 @@
          autocomplete='family-name'
       />
       <TextInput
-         bind:value={$form.organizationName}
-         errors={$errors.organizationName}
-         constraints={$constraints.organizationName}
-         label='Organization name (optional)'
-         name='organizationName'
-         placeholder='The Forrest'
+         bind:value={$form.companyName}
+         errors={$errors.companyName}
+         constraints={$constraints.companyName}
+         label='Company name'
+         name='companyName'
+         placeholder='Acme Self Storage'
          autocomplete='organization'
       />
       <FormProgress delayed={$delayed} timeout={$timeout}/>

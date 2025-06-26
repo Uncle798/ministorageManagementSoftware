@@ -10,11 +10,10 @@
    interface Props {
       data: SuperValidated<Infer<RegisterFormSchema>>
       registerFormModalOpen?: boolean
-      formType: 'customer' | 'employee'
       redirectTo?:string;
       classes?: string;
    }
-   let { data, registerFormModalOpen = $bindable(), formType, redirectTo, classes }:Props = $props();
+   let { data, registerFormModalOpen = $bindable(), redirectTo, classes }:Props = $props();
    let { form, errors, constraints, message, enhance, delayed, timeout} = superForm(data, {
       onUpdated(){
          registerFormModalOpen=false;
@@ -23,7 +22,7 @@
 </script>
 <div class={classes}>
    <FormMessage message={$message} />
-   <form method="POST" action="/forms/registerForm?/{formType}&redirectTo={redirectTo}" use:enhance>
+   <form method="POST" action="/forms/registerForm&redirectTo={redirectTo}" use:enhance>
       <TextInput
          label='Given name'
          name='givenName'
