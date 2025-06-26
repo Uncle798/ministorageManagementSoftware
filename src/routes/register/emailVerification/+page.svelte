@@ -10,13 +10,15 @@
     }
 </script>
 
-    <Header title='Email Verification' />
+<Header title='Email Verification' />
+{#if data.user}        
     {#if data.emailVerificationForm}
         <EmailVerificationForm 
             data={data.emailVerificationForm} 
             emailVerificationModalOpen={emailVerificationOpen} 
             redirect={redirectTo}
-            emailVerification={false}
+            userId={data.user?.id}
             classes='m-2 mt-10'
         />
     {/if}
+{/if}
