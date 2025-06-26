@@ -34,9 +34,10 @@ model User {
 }
 
 model DatabaseBranch {
-  id     String @id @unique @default(cuid(2))
-  neonId String
-  user   User   @relation(fields: [userId], references: [id])
+  id     String  @id @unique @default(cuid(2))
+  neonId String?
+  user   User    @relation(fields: [userId], references: [id])
+  url    String?
   userId String
 }
 
