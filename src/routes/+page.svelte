@@ -46,5 +46,17 @@
             body: JSON.stringify({userId:data.user?.id})
          })
       }}>delete branch</button>
+      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
+         await fetch('/api/createDeployment', {
+            method: 'POST',
+            body: JSON.stringify({userId:data.user?.id})
+         })
+      }}>Create deployment</button>
+      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
+         await fetch('/api/deleteDeployment', {
+            method: 'POST',
+            body: JSON.stringify({userId:data.user?.id})
+         })
+      }}>Delete deployment</button>
    {/if}
 </div>
