@@ -1,3 +1,5 @@
+
+import { NEON_API_ROLE_PASSWORD } from '$env/static/private';
 import { softwareEnvVars } from '$lib/server/envVars';
 import { prisma } from '$lib/server/prisma';
 import { vercelClient } from '$lib/server/vercel';
@@ -12,6 +14,9 @@ export const POST: RequestHandler = async (event) => {
    const dbDeployment = await prisma.vercelDeployment.create({
       data: {
          userId,
+      },
+      include: {
+         user: true
       }
    });
    try {
@@ -39,6 +44,24 @@ export const POST: RequestHandler = async (event) => {
                }
          })
       }
+      const dbBranch = await prisma.databaseBranch.findFirst({
+         where: {
+            userId,
+         }
+      })
+      console.log('dbBranch.url', dbBranch?.url)
+      if(dbBranch?.url){
+         await vercelClient.projects.createProjectEnv({
+            idOrName: project.id,
+            upsert: 'true',
+            requestBody: {
+               key: 'POSTGRES_PRISMA_URL',
+               value: `postgresql://api:${NEON_API_ROLE_PASSWORD}@${dbBranch.url}/Demo01?sslmode=require&channel_binding=require`,
+               type: 'plain',
+               target: ['development', 'preview', 'production']
+            }
+         })
+      }
       const deployment = await vercelClient.deployments.createDeployment({
          requestBody: {
             name: project.name,
@@ -46,7 +69,7 @@ export const POST: RequestHandler = async (event) => {
             gitSource: {
                org: 'Uncle798',
                repo: 'mmsWebsiteSvelte5',
-               ref: 'main',
+               ref: 'Demo',
                type: 'github'
             }
          }
@@ -63,6 +86,5 @@ export const POST: RequestHandler = async (event) => {
    } catch (error) {
       console.error(error instanceof Error ? `Error: ${error.message}` : String(error));
    }
-   
    return new Response();
 };
