@@ -19,7 +19,7 @@
       }
    }
 </script>
-<div>
+<div class="mt-10 mx-2">
    <h1>Welcome to Ministorage Management Software</h1>
    <p>
       If you're looking for software to manage your self-storage business you've found a home-grown solution. I'm a second generation storage owner and, now a software developer. 
@@ -58,5 +58,10 @@
             body: JSON.stringify({userId:data.user?.id})
          })
       }}>Delete deployment</button>
+      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
+         await fetch('/api/listDnsRecords', {
+            method: 'POST',
+         })
+      }}>list dns records</button>
    {/if}
 </div>
