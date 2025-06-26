@@ -12,7 +12,7 @@ export const POST: RequestHandler = async (event) => {
    }
    const dbBranch = await prisma.databaseBranch.create({
       data: {
-         userId,
+         userId: String(userId),
       }
    });
    const branch = await neonClient.createProjectBranch(NEON_PROJECT_ID, {
@@ -29,6 +29,15 @@ export const POST: RequestHandler = async (event) => {
          name: dbBranch.id
       }
    })
-   console.log(branch);
-   return new Response(null, {status:200});
+   await prisma.databaseBranch.update({
+      where: {
+         id: dbBranch.id
+      },
+      data: {
+         neonId: branch.data.branch.id,
+         url: branch.data.endpoints[0].host
+      }
+   })
+   console.log(branch.data);
+   return new Response(JSON.stringify(branch.data), {status:200});
 };
