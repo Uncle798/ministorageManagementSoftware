@@ -10,7 +10,7 @@ import { PUBLIC_COMPANY_EMAIL } from '$env/static/public';
 
 export const load = (async (event) => {
    const magicLinkForm = await superValidate(valibot(magicLinkFormSchema))
-   const toastReason = event.url.searchParams.get('toast');
+   const toastReason = event.url.searchParams.get('toastReason');
    const redirectTo = event.url.searchParams.get('redirectTo');
    const unitNum = event.url.searchParams.get('unitNum');
    const invoiceNum = event.url.searchParams.get('invoiceNum');
