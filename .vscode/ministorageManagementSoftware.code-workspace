@@ -1,8 +1,14 @@
 {
 	"folders": [
 		{
-			"path": "/.."
+			"path": "../"
 		}
 	],
-	"settings": {}
+	"settings": {		
+		"cSpell.words": [
+			"elavon",
+			"MMYY",
+			"pdfmake",
+			"valibot"
+		]},
 }
