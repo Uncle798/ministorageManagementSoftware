@@ -4,7 +4,7 @@
 	import type { PageData } from "./$types";
     
     let {data, emailVerificationOpen=$bindable(false)}: {data:PageData, emailVerificationOpen:boolean} = $props();
-    let  redirectTo= $state(data.redirectTo);
+    let redirectTo= $state(data.redirectTo);
     if(!data.redirectTo){
         redirectTo = 'home'
     }
@@ -14,8 +14,7 @@
 {#if data.user}        
     {#if data.emailVerificationForm}
         <EmailVerificationForm 
-            data={data.emailVerificationForm} 
-            emailVerificationModalOpen={emailVerificationOpen} 
+            data={data.emailVerificationForm}
             redirect={redirectTo}
             userId={data.user?.id}
             classes='m-2 mt-10'
