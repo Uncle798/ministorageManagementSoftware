@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { ObjectParser } from "@pilcrowjs/object-parser";
 	import type { PageData } from "./$types";
+	import RegisterForm from "$lib/forms/RegisterForm.svelte";
+	import Header from "$lib/Header.svelte";
 
    interface Props {
       data: PageData
@@ -13,12 +15,12 @@
          }).then(async (res) => {
             return await res.json()
          })
-      const parser = new ObjectParser(res);
-      if(res){
-         parser
+      if(branchElement){
+         branchElement.innerHTML = res
       }
    }
 </script>
+<Header title="Home" />
 <div class="mt-10 mx-2">
    <h1>Welcome to Ministorage Management Software</h1>
    <p>
@@ -28,7 +30,8 @@
       Credit cards are managed by <a href="https://www.elavon.com" class="anchor">Elavon</a> so your customers data is safe and secure, and you get some of the lowest processing fees around. 
    </p>
    <p>
-
+      Looking for a demo? Fill this out to get a personalized demo. I will not spam you or contact you except to verify your email address.
+      <RegisterForm data={data.registerForm} redirectTo='demo'/>
    </p>
    {#if data.user?.admin}  
       <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
