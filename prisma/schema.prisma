@@ -44,6 +44,7 @@ model DatabaseBranch {
 model VercelDeployment {
   id       String  @id @unique @default(cuid(2))
   vercelId String?
+  name     String? 
   user     User    @relation(fields: [userId], references: [id])
   userId   String
 }
