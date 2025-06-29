@@ -48,10 +48,14 @@ export const actions: Actions = {
 		const session = await createSession(token, user.id);
 		setSessionTokenCookie(event, token, session.expiresAt);
 		const unitNum = event.url.searchParams.get('unitNum');
+		const redirectTo = event.url.searchParams.get('redirectTo');
 		const code = await generateEmailVerificationRequest(user.id, user.email!);
 		sendVerificationEmail(code, user.email!);
 		if(unitNum){	
 			redirect(302, `/register/emailVerification?unitNum=${unitNum}`);
+		}
+		if(redirectTo){
+			redirect(302, `/register/emailVerification?redirectTo=${redirectTo}`)
 		}
 		redirect(302, `/register/emailVerification`);
    },
