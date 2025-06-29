@@ -1,0 +1,17 @@
+{	
+   "runOnStartup": true,
+   "terminals": [
+		{
+			"splitTerminals": [
+				{
+					"name": "server",
+					"commands": ["pnpm run dev --host"]
+				},
+				{
+					"name": "ngrok",
+					"commands":["ngrok start basic"]
+				}
+			]
+		}
+	]
+}
