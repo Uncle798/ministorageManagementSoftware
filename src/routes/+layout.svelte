@@ -19,6 +19,7 @@
 	}
 	let customerLinks:Link[] =[
 		{link: '/', label: 'Home'},
+		{link: '/users', label: 'Users'}
 	]
 	let adminLinks:Link[] = [
 		{link: '/users', label:'All Users'},
@@ -50,7 +51,7 @@
 				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}><XCircleIcon aria-label='close' class=''/></button>
 				<ul>
 					{#each customerLinks as link}
-						<a href={link.link} class="anchor">{link.label}</a>
+						<li><a href={link.link} class="anchor">{link.label}</a></li>
 					{/each}
 					<div class="absolute bottom-0 m-1 sm:m-2 mb-2  bg-surface-100-900">
 						{#if data.user}
