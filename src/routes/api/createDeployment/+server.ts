@@ -48,7 +48,7 @@ export const POST: RequestHandler = async (event) => {
          where: {
             userId,
          }
-      })
+      });
       console.log('dbBranch.url', dbBranch?.url)
       if(dbBranch?.url){
          await vercelClient.projects.createProjectEnv({

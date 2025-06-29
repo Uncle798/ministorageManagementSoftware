@@ -14,10 +14,9 @@ export const POST: RequestHandler = async (event) => {
       }
    })
    const projectList = await vercelClient.projects.getProjects({});
-   console.log(projectList)
    for(const dbDeployment of dbDeployments){
       for(const project of projectList.projects){
-         if(project.name === `mms-demo-${dbDeployment.id}`){
+         if(project.name === dbDeployment.name){
             await vercelClient.projects.deleteProject({
                idOrName:project.id
             })
@@ -29,6 +28,5 @@ export const POST: RequestHandler = async (event) => {
          }
       }
    }
-   console.log('deleted')
    return new Response(JSON.stringify('deployments deleted'), {status: 200});
 };
