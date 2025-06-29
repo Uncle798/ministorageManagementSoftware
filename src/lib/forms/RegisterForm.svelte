@@ -22,7 +22,7 @@
 </script>
 <div class={classes}>
    <FormMessage message={$message} />
-   <form method="POST" action="/forms/registerForm&redirectTo={redirectTo}" use:enhance>
+   <form method="POST" action="/forms/registerForm?redirectTo={redirectTo}" use:enhance>
       <TextInput
          label='Given name'
          name='givenName'
