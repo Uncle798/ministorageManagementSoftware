@@ -27,4 +27,10 @@ export const ratelimit = {
       prefix: 'ratelimit:emailVerification',
       limiter: Ratelimit.slidingWindow(1, '20s')
    }),
+   customerForm: new Ratelimit({
+      redis,
+      analytics: false,
+      prefix: 'ratelimit:customerForm',
+      limiter: Ratelimit.slidingWindow(1, '10s')
+   })
 }
