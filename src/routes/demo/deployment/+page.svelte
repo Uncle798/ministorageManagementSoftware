@@ -15,5 +15,8 @@
     {:else}
         Building deployment...
     {/if}
-    {data.alias}
+    <div>
+        Alias: 
+        {data.alias?.alias}
+    </div>
 </div>
