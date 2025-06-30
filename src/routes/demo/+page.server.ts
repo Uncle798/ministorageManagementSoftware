@@ -9,11 +9,26 @@ export const load = (async (event) => {
    if(!event.locals.user){
       redirect(302, '/login?toastReason=unauthorized')
    }
-   let dbBranch = await prisma.databaseBranch.create({
-      data: {
+   let dbBranch = await prisma.databaseBranch.findFirst({
+      where: {
          userId: event.locals.user.id
       }
    })
+   if(!dbBranch){
+      dbBranch = await prisma.databaseBranch.create({
+         data: {
+            userId: event.locals.user.id
+         }
+      })
+   }
+   const branchList = await neonClient.listProjectBranches({
+      projectId:NEON_PROJECT_ID
+   });
+   for(const branch of branchList.data.branches){
+      if(branch.id === dbBranch.neonId){
+         return {}
+      }
+   }
    const branch = await neonClient.createProjectBranch(NEON_PROJECT_ID, {
       endpoints: [
          {
