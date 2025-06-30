@@ -31,8 +31,8 @@
    </p>
    <p>
       Looking for a demo? Fill this out to get a personalized demo. I will not spam you or contact you except to verify your email address.
-      <RegisterForm data={data.registerForm} redirectTo='demo'/>
    </p>
+   <RegisterForm data={data.registerForm} redirectTo='demo'/>
    {#if data.user?.admin}  
       <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
          console.log(data.user?.id)
