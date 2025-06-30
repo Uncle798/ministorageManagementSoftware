@@ -8,7 +8,7 @@
    onMount(()=>{
       mounted=true;
       setTimeout(()=>{
-         goto('/demo/deploymentCreation')
+         goto('/demo/projectCreation')
       }, 500)
    })
 </script>
