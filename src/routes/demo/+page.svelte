@@ -1,21 +1,27 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-   import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import { fromStore } from 'svelte/store';
+   import type { PageData } from './$types';
+   import { source } from 'sveltekit-sse';
 
    let { data }: { data: PageData } = $props();
-   let mounted = $state(false)
-   onMount(()=>{
-      mounted=true;
-      setTimeout(()=>{
-         goto('/demo/projectCreation')
-      }, 500)
+   const value = source('/api/createDemo').select('message');
+   const alias = source('/api/createDemo').select('alias');
+   const state = $state(fromStore(alias));
+   $effect(()=>{
+      if(state.current !== ''){ 
+         console.log(state.current)
+         window.location.assign(`https://${state.current}`);
+      }
    })
 </script>
-{#if !mounted}
-   <div class="mt-10">
-      Creating personalized Database
+<div class="mt-10 mx-2">
+
+   Message: {$value}
+   <div>
+      Alias: {$alias}
    </div>
-   {:else}
-   <div class="mt-10">Database created</div>
-{/if}
+   <div>
+      State: {state.current}
+   </div>
+</div>
