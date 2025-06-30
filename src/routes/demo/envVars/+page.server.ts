@@ -4,6 +4,8 @@ import { redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 import type { PageServerLoad } from './$types';
 import { NEON_API_ROLE_PASSWORD } from '$env/static/private';
+import { generateSessionToken, setDemoSessionTokenCookie } from '$lib/server/authUtils';
+import dayjs from 'dayjs';
 
 export const load = (async (event) => {
    if(!event.locals.user){
@@ -50,6 +52,33 @@ export const load = (async (event) => {
             target: ['development', 'preview', 'production']
          }
       })
+      const token = generateSessionToken();
+      interface EnvVars {
+         key: string | undefined,
+         value: string | undefined,
+      }
+      const userEnvVars:EnvVars[] = [
+         {key: 'USER_GIVEN_NAME', value: event.locals.user.givenName},
+         {key: 'USER_FAMILY_NAME', value: event.locals.user.familyName},
+         {key: 'USER_EMAIL', value: event.locals.user.email},
+         {key: event.locals.user.companyName ? 'USER_COMPANY_NAME' : undefined, value: event.locals.user.companyName ? event.locals.user.companyName : undefined},
+         {key: 'DEMO_SESSION_TOKEN', value: token},
+         {key: 'PUBLIC_COMPANY_URL', value: `demo-${event.locals.user.familyName}-${event.locals.user.givenName}.ministoragemanagementsoftware.com`}
+      ]
+      for(const envVar of userEnvVars){
+         if(envVar.key !== undefined && envVar.value !== undefined)
+         await vercelClient.projects.createProjectEnv({
+            idOrName: projectId,
+            upsert: 'true',
+            requestBody: {
+               key: envVar.key,
+               value: envVar.value,
+               type: 'plain',
+               target: ['development', 'preview', 'production']
+            }
+         })
+      }
+      setDemoSessionTokenCookie(event, token, dayjs().add(1, 'month').toDate());
       return {projectId};
    }
 }) satisfies PageServerLoad;
