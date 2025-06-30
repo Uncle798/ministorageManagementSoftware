@@ -61,7 +61,7 @@ export const load = (async (event) => {
          {key: 'USER_GIVEN_NAME', value: event.locals.user.givenName},
          {key: 'USER_FAMILY_NAME', value: event.locals.user.familyName},
          {key: 'USER_EMAIL', value: event.locals.user.email},
-         {key: event.locals.user.companyName ? 'USER_COMPANY_NAME' : undefined, value: event.locals.user.companyName ? event.locals.user.companyName : undefined},
+         {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user.companyName!},
          {key: 'DEMO_SESSION_TOKEN', value: token},
          {key: 'PUBLIC_COMPANY_URL', value: `demo-${event.locals.user.familyName}-${event.locals.user.givenName}.ministoragemanagementsoftware.com`}
       ]
