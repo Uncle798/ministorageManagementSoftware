@@ -12,6 +12,7 @@ export const load = (async (event) => {
          userId: event.locals.user.id
       }
    })
+   console.log(dbDeployment)
    if(dbDeployment?.name){
       const deployment = await vercelClient.deployments.createDeployment({
          requestBody: {
@@ -41,8 +42,9 @@ export const load = (async (event) => {
             withGitRepoInfo: 'true',
          })
          deploymentStatus = statusResponse.status;
+         console.log(deploymentStatus)
          
-      } while (deploymentStatus !== 'READY');
+      } while (deploymentStatus === 'BUILDING' || deploymentStatus === 'INITIALIZING' || deploymentStatus === 'QUEUED');
       const alias = await vercelClient.aliases.assignAlias({
          id: deployment.id,
          requestBody: {
@@ -50,6 +52,7 @@ export const load = (async (event) => {
             redirect: null,
          }
       })
+      console.log(alias)
       return {alias};
    }
 }) satisfies PageServerLoad;
