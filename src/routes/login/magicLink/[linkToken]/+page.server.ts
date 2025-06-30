@@ -7,7 +7,7 @@ export const load = (async (event) => {
    const linkToken = event.params.linkToken;
    const result = await verifyMagicLink(linkToken);
    if(result === 'not found'){
-      return fail(404, {message:'token not found'})
+      fail(404, {message:'token not found'})
    }
    if(result === 'expired'){
       redirect(302, '/login?toast=linkExpired');
@@ -21,7 +21,7 @@ export const load = (async (event) => {
       }
    })
    if(!user){
-      return fail(500)
+      fail(500)
    }
    const token =  generateSessionToken();
    const session = await createSession(token, user.id!);
