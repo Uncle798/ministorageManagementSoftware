@@ -5,8 +5,8 @@ import { neonClient } from '$lib/server/neon';
 import { NEON_PROJECT_ID, NEON_API_ROLE_PASSWORD } from '$env/static/private';
 import { EndpointType } from '@neondatabase/api-client';
 import { vercelClient } from '$lib/server/vercel';
-import { softwareEnvVars } from '$lib/server/envVars';
 import { generateSessionToken,} from '$lib/server/authUtils';
+import * as softwareEnvVars from '$env/static/private'
 
 export const POST: RequestHandler = async (event) => {
    if(!event.locals.user){
@@ -123,18 +123,20 @@ export const POST: RequestHandler = async (event) => {
                })
             }
             emit('message', 'Project created');
-            for(const envVar of softwareEnvVars){
-               await vercelClient.projects.createProjectEnv({
-                  idOrName: project.id,
-                  upsert: 'true',
-                  requestBody: {
-                     key: envVar.key,
-                     value: envVar.value,
-                     type: 'plain', 
-                     target: ['development', 'preview', 'production']
-                  }
-               })
-               emit('message', `${envVar.key} variable created`)
+            for(const envVar of Object.entries(softwareEnvVars)){
+               if(envVar[0].startsWith('SOFTWARE')){
+                  await vercelClient.projects.createProjectEnv({
+                     idOrName: project.id,
+                     upsert: 'true',
+                     requestBody: {
+                        key: envVar[0],
+                        value: envVar[1],
+                        type: 'plain', 
+                        target: ['development', 'preview', 'production']
+                     }
+                  })
+                  emit('message', `${envVar[0]} variable created`)
+               }
             }
             await vercelClient.projects.createProjectEnv({
                idOrName: project.id,
