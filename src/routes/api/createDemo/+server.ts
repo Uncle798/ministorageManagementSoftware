@@ -128,7 +128,7 @@ export const POST: RequestHandler = async (event) => {
                      idOrName: project.id,
                      upsert: 'true',
                      requestBody: {
-                        key: envVar[0],
+                        key: envVar[0].substring(envVar[0].indexOf('_')+1),
                         value: envVar[1],
                         type: 'plain', 
                         target: ['development', 'preview', 'production']
@@ -146,7 +146,7 @@ export const POST: RequestHandler = async (event) => {
                   type: 'plain',
                   target: ['development', 'preview', 'production']
                }
-            })
+            });
             emit('message', 'Software environment variables created');
             const token = generateSessionToken();
             emit('token', token);
