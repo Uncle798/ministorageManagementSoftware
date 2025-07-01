@@ -177,7 +177,6 @@ export const POST: RequestHandler = async (event) => {
             emit('message', 'Custom environment variables created');
             let deploymentStatus;
             let deployment;
-            console.log(project.latestDeployments)
             if(project.latestDeployments?.length === 0){
                deployment = await vercelClient.deployments.createDeployment({
                   requestBody: {
@@ -204,7 +203,7 @@ export const POST: RequestHandler = async (event) => {
                      ellipsis += '.'
                   }
                   deploymentStatus = statusResponse.status;
-                  if(i%3 === 0){
+                  if(i%3 === 0 && i !== 0){
                      emit('message', 'Reticulating splines');
                   } else {
                      emit('message', deploymentStatus.substring(0,1) + deploymentStatus.substring(1).toLowerCase() + ellipsis);
@@ -239,7 +238,6 @@ export const POST: RequestHandler = async (event) => {
                      return res.alias
                   })
                }
-               emit('domain', alias)
                emit('alias', alias)
             }
          } catch (error) {

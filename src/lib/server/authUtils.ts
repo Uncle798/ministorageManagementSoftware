@@ -84,16 +84,15 @@ export function setSessionTokenCookie(event: RequestEvent, token:string, expires
       path: '/',
       secure: import.meta.env.PROD,
       sameSite: 'lax',
-      expires: expiresAt
+      expires: expiresAt,
    })
 }
-export function setDemoSessionTokenCookie(event: RequestEvent, token:string, expiresAt: Date, domain:string):void {
+export function setDemoSessionTokenCookie(event: RequestEvent, token:string, expiresAt: Date):void {
    event.cookies.set('demoSession', token, {
-      domain,
       httpOnly: true,
       path: '/',
-      secure: import.meta.env.PROD,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       expires: expiresAt
    })
 }
