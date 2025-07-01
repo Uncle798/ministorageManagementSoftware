@@ -123,7 +123,7 @@ export const POST: RequestHandler = async (event) => {
             }
             emit('message', 'Project created');
             for(const envVar of Object.entries(softwareEnvVars)){
-               if(envVar[0].startsWith('SOFTWARE')){
+               if(envVar[0].startsWith('SOFTWARE_')){
                   await vercelClient.projects.createProjectEnv({
                      idOrName: project.id,
                      upsert: 'true',
