@@ -39,7 +39,6 @@ export const POST: RequestHandler = async (event) => {
                   for(const eP of endpointList.data.endpoints){
                      if(eP.branch_id === b.id){
                         endpoint = await neonClient.getProjectEndpoint(NEON_PROJECT_ID, eP.id)
-
                      }
                   }
                }
