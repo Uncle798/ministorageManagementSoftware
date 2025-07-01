@@ -134,7 +134,7 @@ export const POST: RequestHandler = async (event) => {
                         target: ['development', 'preview', 'production']
                      }
                   })
-                  emit('message', `${envVar[0]} variable created`)
+                  emit('message', `${envVar[0].substring(envVar[0].indexOf('_')+1)} variable created`)
                }
             }
             await vercelClient.projects.createProjectEnv({
@@ -160,7 +160,7 @@ export const POST: RequestHandler = async (event) => {
                {key: 'USER_EMAIL', value: event.locals.user!.email},
                {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user!.companyName!},
                {key: 'DEMO_SESSION_TOKEN', value: token},
-               {key: 'PUBLIC_COMPANY_URL', value: `demo-${event.locals.user!.familyName}-${event.locals.user!.givenName}.ministoragemanagementsoftware.com`}
+               {key: 'PUBLIC_URL', value: `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`}
             ]
             for(const envVar of userEnvVars){
                if(envVar.key !== undefined && envVar.value !== undefined)

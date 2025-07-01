@@ -22,10 +22,6 @@
          })
       }
    })
-   beforeNavigate(async(navigation)=>{
-      console.log(tokenState.current)
-      navigation.cancel();
-   })
 </script>
 <div class="mt-10 mx-2">
 
