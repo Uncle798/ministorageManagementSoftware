@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { beforeNavigate, goto } from '$app/navigation';
 	import { fromStore } from 'svelte/store';
    import type { PageData } from './$types';
    import { source } from 'sveltekit-sse';
@@ -7,12 +7,24 @@
    let { data }: { data: PageData } = $props();
    const value = source('/api/createDemo').select('message');
    const alias = source('/api/createDemo').select('alias');
-   const state = $state(fromStore(alias));
+   const tokenStore = source('/api/createDemo').select('token');
+   const domainStore = source('/api/createDemo').select('domain');
+   const aliasState = $state(fromStore(alias));
+   const tokenState = $state(fromStore(tokenStore));
+   const domainState = $state(fromStore(domainStore));
    $effect(()=>{
-      if(state.current !== ''){ 
-         console.log(state.current)
-         window.location.assign(`https://${state.current}`);
+      if(aliasState.current !== ''){ 
+         console.log(aliasState.current)
+         window.location.assign(`https://${aliasState.current}`);
       }
+   })
+   beforeNavigate(async()=>{
+      console.log(tokenState.current)
+      await fetch('/api/createDemo/setCookie', {
+         method: 'POST',
+         credentials: 'include',
+         body: JSON.stringify({token:tokenState.current, domain:domainState.current})
+      })
    })
 </script>
 <div class="mt-10 mx-2">
@@ -22,6 +34,6 @@
       Alias: {$alias}
    </div>
    <div>
-      State: {state.current}
+      State: {aliasState.current}
    </div>
 </div>
