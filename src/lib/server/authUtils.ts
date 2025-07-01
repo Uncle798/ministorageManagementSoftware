@@ -89,6 +89,7 @@ export function setSessionTokenCookie(event: RequestEvent, token:string, expires
 }
 export function setDemoSessionTokenCookie(event: RequestEvent, token:string, expiresAt: Date):void {
    event.cookies.set('demoSession', token, {
+      domain: 'ministoragemanagementsoftware.com',
       httpOnly: true,
       path: '/',
       secure: true,
