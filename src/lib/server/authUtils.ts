@@ -87,8 +87,9 @@ export function setSessionTokenCookie(event: RequestEvent, token:string, expires
       expires: expiresAt
    })
 }
-export function setDemoSessionTokenCookie(event: RequestEvent, token:string, expiresAt: Date):void {
+export function setDemoSessionTokenCookie(event: RequestEvent, token:string, expiresAt: Date, domain:string):void {
    event.cookies.set('demoSession', token, {
+      domain,
       httpOnly: true,
       path: '/',
       secure: import.meta.env.PROD,
@@ -98,7 +99,7 @@ export function setDemoSessionTokenCookie(event: RequestEvent, token:string, exp
 }
 
 export function deleteSessionTokenCookie(event: RequestEvent):void {
-   event.cookies.set('session', '', {
+   event.cookies.set('demoSession', '', {
       httpOnly: true,
       path: '/',
       secure: import.meta.env.PROD,
