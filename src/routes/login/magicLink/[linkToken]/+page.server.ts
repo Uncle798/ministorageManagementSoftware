@@ -1,13 +1,13 @@
 import { createSession, generateSessionToken, setSessionTokenCookie, verifyMagicLink } from '$lib/server/authUtils';
 import { prisma } from '$lib/server/prisma';
 import type { PageServerLoad } from './$types';
-import { fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 
 export const load = (async (event) => {
    const linkToken = event.params.linkToken;
    const result = await verifyMagicLink(linkToken);
    if(result === 'not found'){
-      fail(404, {message:'token not found'})
+      error(404, {message:'token not found'})
    }
    if(result === 'expired'){
       redirect(302, '/login?toast=linkExpired');
@@ -21,7 +21,7 @@ export const load = (async (event) => {
       }
    })
    if(!user){
-      fail(500)
+      error(500)
    }
    const token =  generateSessionToken();
    const session = await createSession(token, user.id!);
