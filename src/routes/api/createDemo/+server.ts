@@ -134,6 +134,7 @@ export const POST: RequestHandler = async (event) => {
                      target: ['development', 'preview', 'production']
                   }
                })
+               emit('message', `${envVar.key} variable created`)
             }
             await vercelClient.projects.createProjectEnv({
                idOrName: project.id,
@@ -147,6 +148,7 @@ export const POST: RequestHandler = async (event) => {
             })
             emit('message', 'Software environment variables created');
             const token = generateSessionToken();
+            emit('token', token);
             interface EnvVars {
                key: string | undefined,
                value: string | undefined,
@@ -173,50 +175,72 @@ export const POST: RequestHandler = async (event) => {
                })
             }
             emit('message', 'Custom environment variables created');
-            const deployment = await vercelClient.deployments.createDeployment({
-               requestBody: {
-                  name: project.name,
-                  target: 'production',
-                  gitSource: {
-                     org: 'Uncle798',
-                     repo: 'mmsWebsiteSvelte5',
-                     ref: 'Demo',
-                     type: 'github'
-                  }
-               }
-            })
-            emit('message', 'Deployment created');
             let deploymentStatus;
-            let ellipsis = '.'
-            let i = 0;
-            do {
-               await new Promise((resolve) => setTimeout(resolve, 5000));
-               const statusResponse = await vercelClient.deployments.getDeployment({
-                  idOrUrl: deployment.id,
-                  withGitRepoInfo: 'true'
-               })
-               if(statusResponse.status === deploymentStatus){
-                  ellipsis += '.'
-               }
-               deploymentStatus = statusResponse.status;
-               if(i%3 === 0){
-                  emit('message', 'Reticulating splines');
-               } else {
-                  emit('message', deploymentStatus.substring(0,1) + deploymentStatus.substring(1).toLowerCase() + ellipsis);
-               }
-               i ++;
-            } while(deploymentStatus === 'BUILDING' || deploymentStatus === 'INITIALIZING' || deploymentStatus === 'QUEUED');
-            emit('message', 'Deployment Ready')
-            if(deploymentStatus === 'READY'){
-               const alias = await vercelClient.aliases.assignAlias({
-                  id: deployment.id,
+            let deployment;
+            console.log(project.latestDeployments)
+            if(project.latestDeployments?.length === 0){
+               deployment = await vercelClient.deployments.createDeployment({
                   requestBody: {
-                     alias: `demo-${event.locals.user!.familyName}-${event.locals.user!.givenName}.ministoragemanagementsoftware.com`,
-                     redirect: null,
+                     name: project.name,
+                     target: 'production',
+                     gitSource: {
+                        org: 'Uncle798',
+                        repo: 'mmsWebsiteSvelte5',
+                        ref: 'Demo',
+                        type: 'github'
+                     }
                   }
                })
-               console.log(alias)
-               emit('alias', alias.alias)
+               emit('message', 'Deployment created');
+               let ellipsis = '.'
+               let i = 0;
+               do {
+                  await new Promise((resolve) => setTimeout(resolve, 5000));
+                  const statusResponse = await vercelClient.deployments.getDeployment({
+                     idOrUrl: deployment.id,
+                     withGitRepoInfo: 'true'
+                  })
+                  if(statusResponse.status === deploymentStatus){
+                     ellipsis += '.'
+                  }
+                  deploymentStatus = statusResponse.status;
+                  if(i%3 === 0){
+                     emit('message', 'Reticulating splines');
+                  } else {
+                     emit('message', deploymentStatus.substring(0,1) + deploymentStatus.substring(1).toLowerCase() + ellipsis);
+                  }
+                  i ++;
+               } while(deploymentStatus === 'BUILDING' || deploymentStatus === 'INITIALIZING' || deploymentStatus === 'QUEUED');
+            } else {
+               deployment = project.latestDeployments![0];
+               deploymentStatus = deployment?.readyState;
+            }
+            if(deploymentStatus){
+               emit('message', deploymentStatus)
+            }
+            if(deploymentStatus === 'READY'){
+               let alias;
+               const aliasList = await vercelClient.aliases.listAliases({
+                  projectId: project.id
+               });
+               for(const a of aliasList.aliases){
+                  if(a.alias === `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`){
+                     alias = a.alias;
+                  }
+               }
+               if(!alias){
+                  alias = await vercelClient.aliases.assignAlias({
+                     id: deployment.id,
+                     requestBody: {
+                        alias: `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`,
+                        redirect: null,
+                     }
+                  }).then((res) =>{
+                     return res.alias
+                  })
+               }
+               emit('domain', alias)
+               emit('alias', alias)
             }
          } catch (error) {
             console.error(error);
