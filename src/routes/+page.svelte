@@ -3,6 +3,7 @@
 	import type { PageData } from "./$types";
 	import RegisterForm from "$lib/forms/RegisterForm.svelte";
 	import Header from "$lib/Header.svelte";
+	import { goto } from "$app/navigation";
 
    interface Props {
       data: PageData
@@ -62,9 +63,7 @@
          })
       }}>Delete deployment</button>
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         await fetch('/api/listDnsRecords', {
-            method: 'POST',
-         })
-      }}>list dns records</button>
+         await goto('/demo')
+      }}>Create Demo</button>
    {/if}
 </div>
