@@ -163,17 +163,19 @@ export const POST: RequestHandler = async (event) => {
                {key: 'PUBLIC_URL', value: `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`}
             ]
             for(const envVar of userEnvVars){
-               if(envVar.key !== undefined && envVar.value !== undefined)
-               await vercelClient.projects.createProjectEnv({
-                  idOrName: project.id,
-                  upsert: 'true',
-                  requestBody: {
-                     key: envVar.key,
-                     value: envVar.value,
-                     type: 'plain',
-                     target: ['development', 'preview', 'production']
-                  }
-               })
+               if(envVar.key !== undefined && envVar.value !== undefined){
+                  await vercelClient.projects.createProjectEnv({
+                     idOrName: project.id,
+                     upsert: 'true',
+                     requestBody: {
+                        key: envVar.key,
+                        value: envVar.value,
+                        type: 'plain',
+                        target: ['development', 'preview', 'production']
+                     }
+                  })
+                  emit('message', envVar.key.substring(0,1)+ envVar.key.substring(1).toLowerCase())
+               }
             }
             emit('message', 'Custom environment variables created');
             let deploymentStatus;
