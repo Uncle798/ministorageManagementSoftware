@@ -1,5 +1,8 @@
 {
-   "functions":{
-      "excludeFiles": "{node_modules}/**"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+   "*/*":{
+      "excludeFiles": "node_modules"
    }
+  }
 }
