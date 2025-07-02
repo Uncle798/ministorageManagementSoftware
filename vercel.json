@@ -1,8 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-   "api":{
-      "excludeFiles": "node_modules"
-   }
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json"
+
 }
