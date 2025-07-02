@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ObjectParser } from "@pilcrowjs/object-parser";
 	import type { PageData } from "./$types";
 	import RegisterForm from "$lib/forms/RegisterForm.svelte";
 	import Header from "$lib/Header.svelte";
