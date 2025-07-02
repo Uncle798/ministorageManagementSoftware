@@ -11,8 +11,11 @@
    const aliasState = $state(fromStore(alias));
    const tokenState = $state(fromStore(tokenStore));
    $effect(()=>{
-      if(aliasState.current !== ''){ 
-         window.location.assign(`https://${aliasState.current}`);
+      if(aliasState.current !== ''){
+         $value = 'Redirecting to' + aliasState.current + '...'
+         setTimeout(()=>{
+            window.location.assign(`https://${aliasState.current}`);
+         }, 1500);
       }
       if(tokenState.current !== ''){
          fetch('/api/createDemo/setCookie', {
