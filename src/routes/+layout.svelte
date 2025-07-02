@@ -2,7 +2,6 @@
 	import { beforeNavigate } from '$app/navigation';
 	import { Toaster, Modal } from '@skeletonlabs/skeleton-svelte';
 	import { toaster } from './toaster';
-	import { XCircle, Menu } from 'lucide-svelte';
 	import { PUBLIC_COMPANY_NAME } from '$env/static/public';
 	import { enhance } from '$app/forms';
 	import '../app.css';
@@ -44,11 +43,11 @@
 			transitionsPositionerOut={{ x: -280, duration: 400 }}
 		>
 		{#snippet trigger()}
-			<Menu class='mx-2 border-2 z-50' aria-label='Main Menu'/>	
+			Main Menu	
 		{/snippet}
 		{#snippet content()}
 			<article class="">
-				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}><XCircle aria-label='close' class=''/></button>
+				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}>Close</button>
 				<ul>
 					{#each customerLinks as link}
 						<li><a href={link.link} class="anchor">{link.label}</a></li>
