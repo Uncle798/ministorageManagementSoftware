@@ -9,17 +9,6 @@
       data: PageData
    }
    let { data }:Props = $props();
-   let branchElement = $state<HTMLDivElement>();
-   const getBranches = async function () {
-      const res = await fetch('/api/listBranches', {
-            method: 'GET'
-         }).then(async (res) => {
-            return await res.json()
-         })
-      if(branchElement){
-         branchElement.innerHTML = res
-      }
-   }
 </script>
 <Header title="Home" />
 <div class="mt-10 mx-2">
@@ -35,33 +24,6 @@
    </p>
    <RegisterForm data={data.registerForm} redirectTo='demo'/>
    {#if data.user?.admin}  
-      <button class="btn preset-filled-primary-50-950" onclick={async ()=>{
-         console.log(data.user?.id)
-         await fetch('/api/createDB', {
-            method: 'POST',
-            body: JSON.stringify({userId: data.user?.id})
-         })
-      }}>create branch</button>
-      <button class="btn preset-filled-primary-50-950" onclick={()=>getBranches()}>list branches</button>
-      <div bind:this={branchElement}></div>
-      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         await fetch('/api/deleteBranch', {
-            method: 'POST',
-            body: JSON.stringify({userId:data.user?.id})
-         })
-      }}>delete branch</button>
-      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         await fetch('/api/createDeployment', {
-            method: 'POST',
-            body: JSON.stringify({userId:data.user?.id})
-         })
-      }}>Create deployment</button>
-      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         await fetch('/api/deleteDeployment', {
-            method: 'POST',
-            body: JSON.stringify({userId:data.user?.id})
-         })
-      }}>Delete deployment</button>
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
          await goto('/demo')
       }}>Create Demo</button>
