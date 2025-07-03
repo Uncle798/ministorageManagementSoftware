@@ -55,7 +55,8 @@
 		],
 		"ignoredBuiltDependencies": [
 			"@prisma/client"
-		]
+		],
+    	"neverBuiltDependencies": []
 	},
 	"dependencies": {
 		"@neondatabase/api-client": "^2.1.0",
