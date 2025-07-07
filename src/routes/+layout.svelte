@@ -6,6 +6,7 @@
 	import { enhance } from '$app/forms';
 	import '../app.css';
 	import type { PageData } from './$types';
+	import { Menu, XCircle } from 'lucide-svelte';
 
 	interface Props {
 		data: PageData,
@@ -43,11 +44,11 @@
 			transitionsPositionerOut={{ x: -280, duration: 400 }}
 		>
 		{#snippet trigger()}
-			Main Menu	
+			<Menu aria-label="Main Menu" />	
 		{/snippet}
 		{#snippet content()}
 			<article class="">
-				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}>Close</button>
+				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}><XCircle aria-label="Close"/> </button>
 				<ul>
 					{#each customerLinks as link}
 						<li><a href={link.link} class="anchor">{link.label}</a></li>
