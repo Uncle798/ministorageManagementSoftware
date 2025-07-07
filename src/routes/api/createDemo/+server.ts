@@ -241,11 +241,12 @@ export const POST: RequestHandler = async (event) => {
                      return res.alias
                   })
                }
-               emit('alias', alias)
+               emit('alias', alias);
             }
          } catch (error) {
             console.error(error);
          }
+         return function cancel(){}
       })
    }
 };
