@@ -10,9 +10,10 @@
    const tokenStore = source('/api/createDemo').select('token');
    const aliasState = $state(fromStore(alias));
    const tokenState = $state(fromStore(tokenStore));
+   let redirecting = $state<string>()
    $effect(()=>{
       if(aliasState.current !== ''){
-         $value = 'Redirecting to' + aliasState.current + '...'
+         redirecting = 'Redirecting to' + aliasState.current + '...'
          setTimeout(()=>{
             window.location.assign(`https://${aliasState.current}`);
          }, 1500);
@@ -31,6 +32,9 @@
    Message: {$value}
    <div>
       Alias: {$alias}
+      {#if redirecting}
+         {redirecting}
+      {/if}
    </div>
    <div>
       State: {aliasState.current}
