@@ -16,7 +16,7 @@
          redirecting = 'Redirecting to' + aliasState.current + '...'
          setTimeout(()=>{
             window.location.assign(`https://${aliasState.current}`);
-         }, 1500);
+         }, 2500);
       }
       if(tokenState.current !== ''){
          fetch('/api/createDemo/setCookie', {
