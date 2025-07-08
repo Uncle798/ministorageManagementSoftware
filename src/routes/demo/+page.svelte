@@ -13,7 +13,7 @@
    let redirecting = $state<string>()
    $effect(()=>{
       if(aliasState.current !== ''){
-         redirecting = 'Redirecting to' + aliasState.current + '...'
+         redirecting = 'Redirecting to ' + aliasState.current + '...'
          setTimeout(()=>{
             window.location.assign(`https://${aliasState.current}`);
          }, 2500);
