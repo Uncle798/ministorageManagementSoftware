@@ -53,5 +53,5 @@ export const DELETE: RequestHandler = async (event) => {
    } catch (error) {
       console.error(error)
    }
-   return new Response();
+   return new Response(JSON.stringify('Everything deleted'), {status: 200});
 };

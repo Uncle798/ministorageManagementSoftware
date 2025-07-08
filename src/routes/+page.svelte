@@ -8,6 +8,7 @@
       data: PageData
    }
    let { data }:Props = $props();
+   let deleted = $state<string>();
 </script>
 <Header title="Home" />
 <div class="mt-10 mx-2">
@@ -27,12 +28,17 @@
          await goto('/demo')
       }}>Create Demo</button>
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         await fetch('/api/deleteDeployment', {
+         const res = await fetch('/api/deleteDeployment', {
             method: 'DELETE',
             body: JSON.stringify({
                userId: data.user?.id
             })
          })
+         const body = await res.json();
+         deleted = body;
       }}>Delete All Demos</button>
+      {#if deleted}
+         {deleted}
+      {/if}
    {/if}
 </div>
