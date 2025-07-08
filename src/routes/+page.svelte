@@ -35,8 +35,9 @@
             })
          })
          const body = await res.json();
-         if(res.status === 200)
-         deleted = 'Everything deleted';
+         if(res.status === 200){
+            deleted = 'Everything deleted';
+         }
       }}>Delete All Demos</button>
       {#if deleted}
          {deleted}
