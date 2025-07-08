@@ -28,7 +28,7 @@
          await goto('/demo')
       }}>Create Demo</button>
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         const res = await fetch('/api/deleteDeployment', {
+         const res = await fetch('/api/destroyDemo', {
             method: 'DELETE',
             body: JSON.stringify({
                userId: data.user?.id
