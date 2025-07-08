@@ -11,25 +11,37 @@ export const DELETE: RequestHandler = async (event) => {
       return new Response(JSON.stringify('User Id not specified'), {status:400});
    }
    try {
-      const user = await prisma.user.findUnique({
-         where: {
-            id: userId,
+      const dbProjects = await prisma.vercelProject.findMany({
+         where:{
+            userId,
          }
       })
       const dbDeployments = await prisma.vercelDeployment.findMany({
          where: {
-            userId,
+            userId
          }
       })
       if(dbDeployments){
          for(const deployment of dbDeployments){
-            await vercelClient.projects.deleteProject({
-               idOrName: deployment.vercelId ? deployment.vercelId : `demo-${user?.familyName}-${user?.givenName}`
+            await vercelClient.deployments.deleteDeployment({
+               id: deployment.vercelId
             })
          }
          await prisma.vercelDeployment.deleteMany({
             where: {
-               userId
+               userId,
+            }
+         })
+      }
+      if(dbProjects){
+         for(const project of dbProjects){
+            await vercelClient.projects.deleteProject({
+               idOrName: project.vercelId
+            }) 
+         }
+         await prisma.vercelProject.deleteMany({
+            where: {
+               userId,
             }
          })
       }

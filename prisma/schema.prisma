@@ -29,6 +29,7 @@ model User {
   verification     Verification[]
   DatabaseBranch   DatabaseBranch[]
   VercelDeployment VercelDeployment[]
+  VercelProject    VercelProject[]
 
   @@unique([id, email])
 }
@@ -41,11 +42,19 @@ model DatabaseBranch {
   userId String
 }
 
+model VercelProject {
+  id       String @id @unique @default(cuid(2))
+  vercelId String
+  name     String
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+}
+
 model VercelDeployment {
-  id       String  @id @unique @default(cuid(2))
-  vercelId String?
-  name     String? 
-  user     User    @relation(fields: [userId], references: [id])
+  id       String @id @unique @default(cuid(2))
+  vercelId String
+  name     String
+  user     User   @relation(fields: [userId], references: [id])
   userId   String
 }
 

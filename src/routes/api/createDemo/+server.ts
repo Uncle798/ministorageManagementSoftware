@@ -7,6 +7,7 @@ import { EndpointType } from '@neondatabase/api-client';
 import { vercelClient } from '$lib/server/vercel';
 import { generateSessionToken,} from '$lib/server/authUtils';
 import * as softwareEnvVars from '$env/static/private'
+import type { VercelProject } from '@prisma/client';
 
 export const POST: RequestHandler = async (event) => {
    if(!event.locals.user){
@@ -70,33 +71,27 @@ export const POST: RequestHandler = async (event) => {
                }
             });
             emit('message', 'Database Created');
-            let dbDeployment = await prisma.vercelDeployment.findFirst({
-               where: {
-                  userId: event.locals.user!.id
-               }
-            });
-            if(!dbDeployment){
-               dbDeployment = await prisma.vercelDeployment.create({
-                  data: {
-                     userId: event.locals.user!.id
-                  }
-               })
-            }
             let project;
+            let dbProject:VercelProject | null;
             const projectList = await vercelClient.projects.getProjects({});
             for(const p of projectList.projects){
                if(p.name === `mms-demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}`){
                   project = p;
-                  if(!dbDeployment.name || !dbDeployment.vercelId){
-                     dbDeployment = await prisma.vercelDeployment.update({
+                  if(project){
+                     dbProject = await prisma.vercelProject.findFirst({
                         where: {
-                           id: dbDeployment.id
-                        },
-                        data: {
-                           name: project.name,
-                           vercelId: project.id
+                           vercelId: p.id
                         }
                      })
+                     if(!dbProject){
+                        dbProject = await prisma.vercelProject.create({
+                           data: {
+                              userId: event.locals.user!.id,
+                              vercelId: p.id,
+                              name: p.name,
+                           }
+                        })
+                     }
                   }
                }
             }
@@ -111,13 +106,11 @@ export const POST: RequestHandler = async (event) => {
                      }
                   }
                })
-               dbDeployment = await prisma.vercelDeployment.update({
-                  where: {
-                     id: dbDeployment.id
-                  },
+               dbProject = await prisma.vercelProject.create({
                   data: {
-                     name: project.name,
-                     vercelId: project.id
+                     userId: event.locals.user!.id,
+                     vercelId: project.id,
+                     name: project.name
                   }
                })
             }
@@ -191,6 +184,13 @@ export const POST: RequestHandler = async (event) => {
                         ref: 'Demo',
                         type: 'github'
                      }
+                  }
+               })
+               await prisma.vercelDeployment.create({
+                  data: {
+                     userId: event.locals.user!.id,
+                     vercelId: deployment.id,
+                     name: deployment.name
                   }
                })
                emit('message', 'Deployment created');
