@@ -26,5 +26,13 @@
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
          await goto('/demo')
       }}>Create Demo</button>
+      <button class="btn preset-filled-primary-50-950" onclick={async()=>{
+         await fetch('/api/deleteDeployment', {
+            method: 'DELETE',
+            body: JSON.stringify({
+               userId: data.user?.id
+            })
+         })
+      }}>Delete All Demos</button>
    {/if}
 </div>
