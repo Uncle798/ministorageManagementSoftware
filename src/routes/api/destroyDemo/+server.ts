@@ -29,15 +29,19 @@ export const POST: RequestHandler = async (event) => {
             if(dbDeployments){
                for(const deployment of dbDeployments){
                   emit('message', deployment.vercelId)
-                  await vercelClient.deployments.deleteDeployment({
-                     id: deployment.vercelId
-                  })
-               }
-               await prisma.vercelDeployment.deleteMany({
-                  where: {
-                     userId,
+                  try {
+                     await vercelClient.deployments.deleteDeployment({
+                        id: deployment.vercelId
+                     })
+                     await prisma.vercelDeployment.deleteMany({
+                        where: {
+                           userId,
+                        }
+                     })  
+                  } catch (error) {
+                     emit('message', String(error))
                   }
-               })
+               }
             }
             emit('message', 'Deleting project')
             if(dbProjects){
