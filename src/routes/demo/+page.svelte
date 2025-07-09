@@ -29,15 +29,9 @@
 </script>
 <Header title={$value} />
 <div class="mt-10 mx-2">
-
-   Message: {$value}
-   <div>
-      Alias: {$alias}
-      {#if redirecting}
-         {redirecting}
-      {/if}
-   </div>
-   <div>
-      State: {aliasState.current}
-   </div>
+   {#if redirecting}
+      Redirecting to {redirecting}
+   {:else}
+      Status: {$value}
+   {/if}
 </div>
