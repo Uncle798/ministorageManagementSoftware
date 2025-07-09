@@ -13,8 +13,8 @@ export const POST: RequestHandler = async (event) => {
       return new Response(JSON.stringify('User Id not specified'), {status:400});
    } else {
       return produce(async function start({emit}) {
+         emit('message', 'Deleting deployment')
          try {
-            emit('message', 'Deleting deployment')
             const dbProjects = await prisma.vercelProject.findMany({
                where:{
                   userId,
@@ -72,6 +72,7 @@ export const POST: RequestHandler = async (event) => {
          } catch (error) {
             console.error(error)
          }
+         return function cancel(){};
       })
    }
 };
