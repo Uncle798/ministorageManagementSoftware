@@ -13,9 +13,32 @@ export const POST: RequestHandler = async (event) => {
    if(!event.locals.user){
       return new Response(JSON.stringify('Must be logged into to create demo'));
    } else {
+      const url = `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`;
       return produce(async function start({emit}) {
          emit('message', 'Creating database');
          try{
+            const demo = await prisma.demo.findFirst({
+               where: {
+                  userId: event.locals.user!.id
+               }
+            })
+            if(demo){
+               await prisma.demo.update({
+                  where: {
+                     id: demo.id
+                  }, 
+                  data: {
+                     updatedAt: new Date()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+                  }
+               })
+               emit('alias', url);
+               return function cancel(){}
+            }
+            await prisma.demo.create({
+               data: {
+                  userId: event.locals.user!.id
+               }
+            })
             let dbBranch = await prisma.databaseBranch.findFirst({
                where: {
                   userId: event.locals.user!.id
@@ -153,7 +176,7 @@ export const POST: RequestHandler = async (event) => {
                {key: 'USER_EMAIL', value: event.locals.user!.email},
                {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user!.companyName!},
                {key: 'DEMO_SESSION_TOKEN', value: token},
-               {key: 'PUBLIC_URL', value: `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`}
+               {key: 'PUBLIC_URL', value: url}
             ]
             for(const envVar of userEnvVars){
                if(envVar.key !== undefined && envVar.value !== undefined){
@@ -226,7 +249,7 @@ export const POST: RequestHandler = async (event) => {
                   projectId: project.id
                });
                for(const a of aliasList.aliases){
-                  if(a.alias === `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`){
+                  if(a.alias === url){
                      alias = a.alias;
                   }
                }
@@ -234,7 +257,7 @@ export const POST: RequestHandler = async (event) => {
                   alias = await vercelClient.aliases.assignAlias({
                      id: deployment.id,
                      requestBody: {
-                        alias: `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`,
+                        alias: url,
                         redirect: null,
                      }
                   }).then((res) =>{
