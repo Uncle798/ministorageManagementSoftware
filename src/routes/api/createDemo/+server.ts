@@ -175,6 +175,8 @@ export const POST: RequestHandler = async (event) => {
                {key: 'USER_FAMILY_NAME', value: event.locals.user!.familyName},
                {key: 'USER_EMAIL', value: event.locals.user!.email},
                {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user!.companyName!},
+               {key: 'PUBLIC_COMPANY_EMAIL', value: event.locals.user!.email},
+               {key: 'PUBLIC_COMPANY_PHONE', value: '15551234567'},
                {key: 'DEMO_SESSION_TOKEN', value: token},
                {key: 'PUBLIC_URL', value: url}
             ]
@@ -231,7 +233,10 @@ export const POST: RequestHandler = async (event) => {
                   deploymentStatus = statusResponse.status;
                   if(i%3 === 0 && i !== 0){
                      emit('message', 'Reticulating splines');
-                  } else {
+                  }else if(i%5 === 0) {
+                     emit('message', 'Still building' + ellipsis)
+                  }
+                  else {
                      emit('message', deploymentStatus.substring(0,1) + deploymentStatus.substring(1).toLowerCase() + ellipsis);
                   }
                   i ++;
