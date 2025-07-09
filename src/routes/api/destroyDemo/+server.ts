@@ -9,6 +9,7 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async (event) => {
    const body = await event.request.json();
    const { userId } = body;
+   console.log(userId)
    if(!userId){
       return new Response(JSON.stringify('User Id not specified'), {status:400});
    } else {
