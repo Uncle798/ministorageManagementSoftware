@@ -28,16 +28,7 @@
          await goto('/demo')
       }}>Create Demo</button>
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
-         const res = await fetch('/api/destroyDemo', {
-            method: 'DELETE',
-            body: JSON.stringify({
-               userId: data.user?.id
-            })
-         })
-         const body = await res.json();
-         if(res.status === 200){
-            deleted = 'Everything deleted';
-         }
+         await goto('/destroyDemo')
       }}>Delete All Demos</button>
       {#if deleted}
          {deleted}
