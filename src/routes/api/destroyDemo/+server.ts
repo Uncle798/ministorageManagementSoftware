@@ -28,6 +28,7 @@ export const POST: RequestHandler = async (event) => {
             })
             if(dbDeployments){
                for(const deployment of dbDeployments){
+                  emit('message', deployment.vercelId)
                   await vercelClient.deployments.deleteDeployment({
                      id: deployment.vercelId
                   })
