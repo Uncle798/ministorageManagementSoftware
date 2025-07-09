@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { beforeNavigate, goto } from '$app/navigation';
+	import Header from '$lib/Header.svelte';
 	import { fromStore } from 'svelte/store';
    import type { PageData } from './$types';
    import { source } from 'sveltekit-sse';
@@ -27,6 +27,7 @@
       }
    })
 </script>
+<Header title={$value} />
 <div class="mt-10 mx-2">
 
    Message: {$value}
