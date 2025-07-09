@@ -74,6 +74,11 @@ export const POST: RequestHandler = async (event) => {
                   }
                })
             }
+            await prisma.demo.deleteMany({
+               where: {
+                  userId,
+               }
+            })
             emit('message', 'Everything deleted')
          } catch (error) {
             console.error(error)
