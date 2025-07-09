@@ -3,7 +3,11 @@
    import type { PageData } from './$types';
 
    let { data }: { data: PageData } = $props();
-   const message = source('/api/destroyDemo').select('message');
+   const message = source('/api/destroyDemo', {
+      options: {
+         body: JSON.stringify({userId:data.user?.id})
+      }
+   }).select('message');
 </script>
 
 <div class="mt-10 mx-2">
