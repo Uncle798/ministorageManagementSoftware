@@ -27,8 +27,7 @@ export async function sendVerificationEmail(verificationCode:string, email:strin
 }
 
 export async function sendMagicLinkEmail(magicLink:string, email:string) {
-   try {
-      
+   try {  
       const response = await mailtrap.send({
          from:sender,
          to: [{email}],
@@ -41,6 +40,21 @@ export async function sendMagicLinkEmail(magicLink:string, email:string) {
       return response;
    } catch (error) {
       console.error(error)
+      return error
+   }
+}
+
+export async function sendStatusEmail(email:string, numberDemos:number) {
+   try {
+      const response = await mailtrap.send({
+         from: sender,
+         to:[{email}],
+         subject: `Number of demos for ${PUBLIC_COMPANY_NAME} yesterday.`,
+         html: `There were ${numberDemos} created yesterday.`
+      })
+      return response
+   } catch (error) {
+      console.error(error);
       return error
    }
 }
