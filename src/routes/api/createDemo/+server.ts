@@ -233,7 +233,7 @@ export const POST: RequestHandler = async (event) => {
                   deploymentStatus = statusResponse.status;
                   if(i%3 === 0 && i !== 0){
                      emit('message', 'Reticulating splines');
-                  }else if(i%5 === 0) {
+                  }else if(i%5 === 0 && i !==0) {
                      emit('message', 'Still building' + ellipsis)
                   }
                   else {
