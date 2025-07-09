@@ -6,7 +6,7 @@ import { vercelClient } from '$lib/server/vercel';
 import { produce } from 'sveltekit-sse';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async (event) => {
+export const POST: RequestHandler = async (event) => {
    const body = await event.request.json();
    const { userId } = body;
    if(!userId){
