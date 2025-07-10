@@ -22,7 +22,6 @@
 		{link: '/about', label: 'About'}
 	]
 	let adminLinks:Link[] = [
-		{link: '/users', label: 'Users'},
 		{link: '/users', label:'All Users'},
 	]
 	let menuOpen = $state(false);
@@ -41,15 +40,15 @@
 			positionerJustify="justify-start"
 			positionerAlign=""
 			positionerPadding=""
-			transitionsPositionerIn={{ x: -280, duration: 400 }}
-			transitionsPositionerOut={{ x: -280, duration: 400 }}
+			transitionsPositionerIn={{ x: -125, duration: 400 }}
+			transitionsPositionerOut={{ x: -125, duration: 400 }}
 		>
 		{#snippet trigger()}
 			<Menu aria-label="Main Menu" />	
 		{/snippet}
 		{#snippet content()}
 			<article class="">
-				<button class="absolute top-1 left-[90px] btn-icon" onclick={()=>{menuOpen=false}}><XCircle aria-label="Close"/> </button>
+				<button class="absolute top-1 left-[80px] btn-icon" onclick={()=>{menuOpen=false}}><XCircle aria-label="Close"/> </button>
 				<ul>
 					{#each customerLinks as link}
 						<li><a href={link.link} class="anchor">{link.label}</a></li>
