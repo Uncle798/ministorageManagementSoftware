@@ -19,9 +19,10 @@
 	}
 	let customerLinks:Link[] =[
 		{link: '/', label: 'Home'},
-		{link: '/users', label: 'Users'}
+		{link: '/about', label: 'About'}
 	]
 	let adminLinks:Link[] = [
+		{link: '/users', label: 'Users'},
 		{link: '/users', label:'All Users'},
 	]
 	let menuOpen = $state(false);
@@ -53,9 +54,13 @@
 					{#each customerLinks as link}
 						<li><a href={link.link} class="anchor">{link.label}</a></li>
 					{/each}
+					{#if data.user?.admin}
+						{#each adminLinks as link}
+							<li><a href={link.link} class="anchor">{link.label}</a></li>
+						{/each}
+					{/if}
 					<div class="absolute bottom-0 m-1 sm:m-2 mb-2  bg-surface-100-900">
 						{#if data.user}
-						<li><a href="/accountSettings" class="anchor">Settings</a></li>
 							<form action="/logout" method="post" use:enhance>
 								<li><button class="anchor" type="submit">Logout</button></li>
 							</form>
@@ -63,8 +68,7 @@
 							<li><a class="anchor" href="/login">Login</a></li>
 						{/if}
 					</div>
-				</ul>
-				
+				</ul>			
 			</article>
 		{/snippet}
 		</Modal>
