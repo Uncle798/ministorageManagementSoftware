@@ -30,7 +30,7 @@
 <Header title={$value} />
 <div class="mt-10 mx-2">
    {#if redirecting}
-      Redirecting to {redirecting}
+      {redirecting}
    {:else}
       Status: {$value}
    {/if}
