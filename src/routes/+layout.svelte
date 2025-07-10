@@ -71,6 +71,6 @@
 			</article>
 		{/snippet}
 		</Modal>
-		<div class="bg-tertiary-50-950 fixed w-screen top-0 left-0 h-9 text-center font-bold z-40 "><a href="/" class="anchor">{PUBLIC_COMPANY_NAME}</a></div>
+		<div class="bg-tertiary-50-950 fixed w-screen top-0 left-0 h-9 text-center font-bold z-30 "><a href="/" class="anchor">{PUBLIC_COMPANY_NAME}</a></div>
 	</header>
 {@render children()}
