@@ -82,7 +82,7 @@ export const POST: RequestHandler = async (event) => {
          } catch (error) {
             console.error(error)
          }
-         console.log(error)
+         console.error(error)
          return function cancel(){};
       })
    }

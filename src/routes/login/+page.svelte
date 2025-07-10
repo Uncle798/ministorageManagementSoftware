@@ -13,7 +13,6 @@
    let { form, message, errors, constraints, enhance, delayed, timeout } = superForm(data.magicLinkForm);
    const toastReason = data.toastReason;
    onMount(() => {
-      console.log(toastReason)
       if(toastReason === 'userAlreadyExists'){
          toaster.create({
             title: 'Email already in use',

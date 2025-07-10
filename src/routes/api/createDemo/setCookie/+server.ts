@@ -12,6 +12,5 @@ export const POST: RequestHandler = async (event) => {
       return new Response(JSON.stringify('Token not provided'), {status:400});
    }
    setDemoSessionTokenCookie(event, token, dayjs().add(1, 'month').toDate())
-   console.log(event.cookies)
    return new Response(null, {status: 200});
 };
