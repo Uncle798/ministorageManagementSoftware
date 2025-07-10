@@ -3,6 +3,6 @@
 	import Header from '$lib/Header.svelte';
 </script>
 <Header title={page.error?.message ? page.error.message : ''} />
-<div class="mt-10">
+<div class="mt-14 sm:mt-10">
     <h1>{page.status}: {page.error?.message}</h1>
 </div>

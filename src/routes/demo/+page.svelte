@@ -28,7 +28,7 @@
    })
 </script>
 <Header title={$value} />
-<div class="mt-10 mx-2">
+<div class="mt-14 sm:mt-10 mx-2">
    {#if redirecting}
       {redirecting}
    {:else}

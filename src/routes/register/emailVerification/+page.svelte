@@ -17,7 +17,7 @@
             data={data.emailVerificationForm}
             redirect={redirectTo}
             userId={data.user?.id}
-            classes='m-2 mt-10'
+            classes='m-2 mt-14 sm:mt-10'
         />
     {/if}
 {/if}

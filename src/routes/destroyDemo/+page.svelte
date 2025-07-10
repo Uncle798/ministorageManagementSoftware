@@ -10,6 +10,6 @@
    }).select('message');
 </script>
 
-<div class="mt-10 mx-2">
+<div class="mt-14 sm:mt-10 mx-2">
    Message: {$message}
 </div>

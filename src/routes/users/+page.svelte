@@ -5,9 +5,9 @@
    let { data }: { data: PageData } = $props();
 </script>
 {#await data.usersPromise}
-   <div class="mt-10">Loading users...</div>
+   <div class="mt-14 sm:mt-10">Loading users...</div>
 {:then users}
-   <div class="mt-10 flex flex-col gap-2 mx-2">
+   <div class="mt-14 sm:mt-10 flex flex-col gap-2 mx-2">
       {#each users as user }
          <div class='border border-primary-50-950 rounded-lg'>
             <UserAdmin {user} classes='m-2' />
