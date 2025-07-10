@@ -31,6 +31,16 @@ export const DELETE:RequestHandler = async (event) => {
          userId
       }
    })
+   await prisma.demo.deleteMany({
+      where: {
+         userId
+      }
+   });
+   await prisma.vercelProject.deleteMany({
+      where: {
+         userId
+      }
+   })
    await prisma.user.delete({
       where: {
          id: userId,
