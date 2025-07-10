@@ -176,7 +176,7 @@ export const POST: RequestHandler = async (event) => {
                {key: 'USER_EMAIL', value: event.locals.user!.email},
                {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user!.companyName!},
                {key: 'PUBLIC_COMPANY_EMAIL', value: event.locals.user!.email},
-               {key: 'PUBLIC_COMPANY_PHONE', value: '15551234567'},
+               {key: 'PUBLIC_PHONE', value: '15551234567'},
                {key: 'DEMO_SESSION_TOKEN', value: token},
                {key: 'PUBLIC_URL', value: url}
             ]
