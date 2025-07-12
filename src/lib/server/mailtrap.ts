@@ -6,8 +6,8 @@ const token = MAILTRAP_TOKEN;
 export const mailtrap = new MailtrapClient({token})
 
 const sender = {
-   name: 'computer@bransonschlegel.com',
-   email: 'computer@bransonschlegel.com',
+   name: 'computer@ministoragemanagementsoftware.com',
+   email: 'computer@ministoragemanagementsoftware.com',
 }
 export async function sendVerificationEmail(verificationCode:string, email:string) {
    try {
