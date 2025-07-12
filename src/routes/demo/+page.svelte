@@ -3,6 +3,7 @@
 	import { fromStore } from 'svelte/store';
    import type { PageData } from './$types';
    import { source } from 'sveltekit-sse';
+	import { onMount } from 'svelte';
 
    let { data }: { data: PageData } = $props();
    const value = source('/api/createDemo').select('message');
@@ -10,7 +11,8 @@
    const tokenStore = source('/api/createDemo').select('token');
    const aliasState = $state(fromStore(alias));
    const tokenState = $state(fromStore(tokenStore));
-   let redirecting = $state<string>()
+   let redirecting = $state<string>();
+   let countdown = $state(100);
    $effect(()=>{
       if(aliasState.current !== ''){
          redirecting = 'Redirecting to ' + aliasState.current + '...'
@@ -26,6 +28,11 @@
          })
       }
    })
+   onMount(()=>{
+      setInterval(()=>{
+         countdown -= 1;
+      }, 1000)
+   })
 </script>
 <Header title={$value} />
 <div class="mt-14 sm:mt-10 mx-2">
@@ -33,5 +40,6 @@
       {redirecting}
    {:else}
       Status: {$value}
+      Come back in about {countdown} seconds and we'll have built something just for you.
    {/if}
 </div>
