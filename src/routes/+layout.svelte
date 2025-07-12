@@ -1,5 +1,4 @@
-ministoragemanagementsoftware.com/
-ministoragemanagmentsoftware.com
+
 <script lang="ts">
 	import { beforeNavigate } from '$app/navigation';
 	import { Toaster, Modal } from '@skeletonlabs/skeleton-svelte';
