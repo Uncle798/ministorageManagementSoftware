@@ -12,7 +12,7 @@
    }).select('message');
    let messageState = $state(fromStore(message))
    $effect(()=>{
-      if(messageState.current === 'Everything Deleted'){
+      if(messageState.current === 'Everything deleted'){
          setTimeout(()=>{
             goto('/')
          }, 2500)
