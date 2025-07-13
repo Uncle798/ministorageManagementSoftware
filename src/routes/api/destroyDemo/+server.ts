@@ -78,6 +78,10 @@ export const POST: RequestHandler = async (event) => {
                   userId,
                }
             })
+            const cookie = event.cookies.get('demoSession')
+            if(cookie){
+               event.cookies.delete('demoSession', {path: '/'})
+            }
             emit('message', 'Everything deleted')
          } catch (error) {
             console.error(error)
