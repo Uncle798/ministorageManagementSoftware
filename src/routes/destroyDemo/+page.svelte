@@ -15,7 +15,7 @@
       if(messageState.current === 'Everything deleted'){
          setTimeout(()=>{
             goto('/')
-         }, 2500)
+         }, 1500)
       }
    })
 </script>
