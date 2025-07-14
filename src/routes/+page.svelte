@@ -12,8 +12,8 @@
 </script>
 <Header title="Home" />
 <div class="mt-14 sm:mt-10 mx-1 sm:mx-2 mb-1 sm:mb-2">
-   <h1>Welcome to Ministorage Management Software</h1>
-   <p>
+   <h1 class="h1">Welcome to Ministorage Management Software</h1>
+   <p class="">
       If you're looking for software to manage your self-storage business you've found a home-grown solution. I'm a second generation storage owner and, now a software developer. 
       Ministorage Management Software is a fully featured web-based solution for both customers and owners built with the latest, most secure, open source frameworks. Customers can sign legally binding contracts from their computer or phone.
       They can sign up for credit card auto-pay without leaving your website. Invoices are automatically generated each day and emailed to customers with a summary of your income emailed to you. 
