@@ -97,6 +97,7 @@ export const POST: RequestHandler = async (event) => {
             let project;
             let dbProject:VercelProject | null;
             const projectList = await vercelClient.projects.getProjects({});
+            console.log('projectList', projectList);
             for(const p of projectList.projects){
                if(p.name === `mms-demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}`){
                   project = p;
