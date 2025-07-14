@@ -20,12 +20,17 @@
       Credit cards are managed by <a href="https://www.elavon.com" class="anchor">Elavon</a> so your customers data is safe and secure, and you get some of the lowest processing fees around. 
    </p>
    <p>
+      My philosophy is simple, the great customer service you're known for just now online. Your customers want to be able to manage their billing and unit as simply as possible. You want to have access to the status of your facility wherever you are. Ministorage Management
+      Software does both of these things all in one platform. Ministorage Management Software doesn't use passwords because your customers probably don't want to remember another password just to pay their storage bill. This is still secure because we verify email addresses and use 
+      magic links as a login solution. 
+   </p>
+   <p>
       Looking for a demo? Fill this out to get a personalized demo. I will not spam you or contact you except to verify your email address.
    </p>
    <RegisterForm data={data.registerForm} redirectTo='demo'/>
    <p>
       Interested in using Ministorage Management Software for your mini-storage? Shoot me an email and we can start the process! I can help you convert your spreadsheets and get your current customers on the platform. Customers will appreciate being able to 
-      manage their payments and you'll appreciate having all 
+      manage their payments and you'll appreciate having all your information in one spot, accessible on your phone or any other device.
    </p>
    {#if data.user?.admin}  
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
