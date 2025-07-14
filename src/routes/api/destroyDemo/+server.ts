@@ -12,6 +12,11 @@ export const POST: RequestHandler = async (event) => {
    if(!userId){
       return new Response(JSON.stringify('User Id not specified'), {status:400});
    } else {
+      const cookie = event.cookies.get('demoSession')
+      console.log('cookie', cookie)
+      if(cookie){
+         event.cookies.delete('demoSession', {path: '/'})
+      }
       return produce(async function start({emit}) {
          const {error} = emit('message', 'Deleting deployment')
          try {
@@ -27,7 +32,6 @@ export const POST: RequestHandler = async (event) => {
             })
             if(dbDeployments){
                for(const deployment of dbDeployments){
-                  emit('message', deployment.vercelId)
                   try {
                      await vercelClient.deployments.deleteDeployment({
                         id: deployment.vercelId
@@ -77,9 +81,6 @@ export const POST: RequestHandler = async (event) => {
                where: {
                   userId,
                }
-            })
-            await fetch('/api/destroyDemo/deleteCookies', {
-               method: 'GET'
             })
             emit('message', 'Everything deleted')
          } catch (error) {
