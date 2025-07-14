@@ -78,7 +78,9 @@ export const POST: RequestHandler = async (event) => {
                   userId,
                }
             })
-            await fetch('/api/destroyDemo/deleteCookies')
+            await fetch('/api/destroyDemo/deleteCookies', {
+               method: 'GET'
+            })
             emit('message', 'Everything deleted')
          } catch (error) {
             console.error(error)
