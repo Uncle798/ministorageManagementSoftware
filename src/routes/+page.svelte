@@ -30,7 +30,7 @@
    <RegisterForm data={data.registerForm} redirectTo='demo'/>
    <p>
       Interested in using Ministorage Management Software for your mini-storage? Shoot me an email and we can start the process! I can help you convert your spreadsheets and get your current customers on the platform. Customers will appreciate being able to 
-      manage their payments and you'll appreciate having all your information in one spot, accessible on your phone or any other device.
+      manage their payments and you'll appreciate having all your information in one spot, accessible on your phone or any other device, all while your customers do some of the work for you.
    </p>
    {#if data.user?.admin}  
       <button class="btn preset-filled-primary-50-950" onclick={async()=>{
