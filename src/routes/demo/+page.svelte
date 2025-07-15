@@ -19,6 +19,7 @@
       if(aliasState.current !== ''){
          redirecting = 'Redirecting to ' + aliasState.current + '...'
          setTimeout(()=>{
+            connection.close();
             window.location.assign(`https://${aliasState.current}`);
          }, 2500);
       }
@@ -50,7 +51,11 @@
    {#if redirecting}
       {redirecting}
    {:else}
-      Status: {$value}
+      {#if $value === ''}
+         Status: Starting...
+      {:else}
+         Status: {$value}
+      {/if}
       <p>
          Come back in about {countdown} seconds and we'll have built something just for you.
       </p>
