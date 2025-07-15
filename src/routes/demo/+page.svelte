@@ -4,15 +4,17 @@
    import type { PageData } from './$types';
    import { source } from 'sveltekit-sse';
 	import { onMount } from 'svelte';
+	import { beforeNavigate } from '$app/navigation';
 
    let { data }: { data: PageData } = $props();
-   const value = source('/api/createDemo').select('message');
-   const alias = source('/api/createDemo').select('alias');
-   const tokenStore = source('/api/createDemo').select('token');
+   const connection = source('/api/createDemo')
+   const value = connection.select('message');
+   const alias = connection.select('alias');
+   const tokenStore = connection.select('token');
    const aliasState = $state(fromStore(alias));
    const tokenState = $state(fromStore(tokenStore));
    let redirecting = $state<string>();
-   let countdown = $state(120);
+   let countdown = $state<number | string>(120);
    $effect(()=>{
       if(aliasState.current !== ''){
          redirecting = 'Redirecting to ' + aliasState.current + '...'
@@ -30,8 +32,17 @@
    })
    onMount(()=>{
       setInterval(()=>{
-         countdown -= 1;
+         if(typeof countdown === 'number'){
+            countdown = countdown - 1;
+            if(countdown >= 0){
+               countdown = 'a few'
+            }
+         }
+
       }, 1000)
+   })
+   beforeNavigate(()=>{
+      connection.close();
    })
 </script>
 <Header title={$value} />
