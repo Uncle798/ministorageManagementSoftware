@@ -36,7 +36,7 @@
 		<Modal
 			open={menuOpen}
 			onOpenChange={(e) => (menuOpen = e.open)}
-			triggerBase="btn bg-primary-50-950 border-secondary-50-950 fixed top-0 left-0 z-50"
+			triggerBase="btn bg-primary-50-950 border-secondary-50-950 fixed top-0 left-0 z-50 h-12 sm:h-9"
 			contentBase="bg-surface-100-900 p-2 space-y-2 shadow-xl w-[125px] h-screen"
 			positionerJustify="justify-start"
 			positionerAlign=""
@@ -45,7 +45,7 @@
 			transitionsPositionerOut={{ x: -125, duration: 400 }}
 		>
 		{#snippet trigger()}
-			<Menu aria-label="Main Menu" class='h-10 sm:h-9'/>	
+			<Menu aria-label="Main Menu" />	
 		{/snippet}
 		{#snippet content()}
 			<article class="">
