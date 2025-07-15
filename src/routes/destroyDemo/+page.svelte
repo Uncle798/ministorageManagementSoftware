@@ -2,14 +2,15 @@
 	import { source } from 'sveltekit-sse';
    import type { PageData } from './$types';
 	import { fromStore } from 'svelte/store';
-	import { goto } from '$app/navigation';
+	import { beforeNavigate, goto } from '$app/navigation';
 
    let { data }: { data: PageData } = $props();
-   const message = source('/api/destroyDemo', {
+   const connection = source('/api/destroyDemo', {
       options: {
          body: JSON.stringify({userId:data.user?.id})
       }
-   }).select('message');
+   })
+   const message = connection.select('message');
    let messageState = $state(fromStore(message))
    $effect(()=>{
       if(messageState.current === 'Everything deleted'){
@@ -17,6 +18,9 @@
             goto('/')
          }, 1500)
       }
+   })
+   beforeNavigate(()=>{
+      connection.close();
    })
 </script>
 
