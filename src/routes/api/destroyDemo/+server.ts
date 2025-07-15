@@ -13,7 +13,6 @@ export const POST: RequestHandler = async (event) => {
       return new Response(JSON.stringify('User Id not specified'), {status:400});
    } else {
       const cookie = event.cookies.get('demoSession')
-      console.log('cookie', cookie)
       if(cookie){
          event.cookies.delete('demoSession', {path: '/'})
       }
