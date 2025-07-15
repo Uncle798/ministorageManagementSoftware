@@ -34,7 +34,7 @@
       setInterval(()=>{
          if(typeof countdown === 'number'){
             countdown = countdown - 1;
-            if(countdown >= 0){
+            if(countdown <= 0){
                countdown = 'a few'
             }
          }
