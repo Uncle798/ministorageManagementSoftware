@@ -222,7 +222,7 @@ export const POST: RequestHandler = async (event) => {
                let ellipsis = '.'
                let i = 0;
                do {
-                  await new Promise((resolve) => setTimeout(resolve, 5000));
+                  await new Promise((resolve) => setTimeout(resolve, 4000));
                   const statusResponse = await vercelClient.deployments.getDeployment({
                      idOrUrl: deployment.id,
                      withGitRepoInfo: 'true'
