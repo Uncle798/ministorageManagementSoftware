@@ -14,7 +14,7 @@
    const aliasState = $state(fromStore(alias));
    const tokenState = $state(fromStore(tokenStore));
    let redirecting = $state<string>();
-   let countdown = $state<number | string>(90);
+   let countdown = $state<number | string>(100);
    $effect(()=>{
       if(aliasState.current !== ''){
          redirecting = 'Redirecting to ' + aliasState.current + '...'
