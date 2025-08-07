@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { RequestHandler } from './$types';
 import { sendStatusEmail } from '$lib/server/mailtrap';
 
-export const GET: RequestHandler = async ({request}) => {
+export const GET: RequestHandler = async ({request, fetch}) => {
    const authHeader = request.headers.get('authorization')
    if(authHeader !== `Bearer ${CRON_SECRET}`) {
       return new Response(JSON.stringify({success:false}), {status: 401})
