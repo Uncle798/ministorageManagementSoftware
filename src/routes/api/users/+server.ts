@@ -1,12 +1,6 @@
 import { prisma } from '$lib/server/prisma';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async () => {
-   
-   return new Response();
-
-};
-
 export const DELETE:RequestHandler = async (event) => {
    if(!event.locals.user?.admin){
       return new Response('Unauthorized', {status:401})
@@ -16,7 +10,7 @@ export const DELETE:RequestHandler = async (event) => {
    if(!userId) {
       return new Response('User Id not provided', {status: 400});
    }
-   await fetch('/destroyDemo', {
+   await event.fetch('/api/destroyDemo', {
       method: 'POST',
       body: JSON.stringify({userId})
    })
