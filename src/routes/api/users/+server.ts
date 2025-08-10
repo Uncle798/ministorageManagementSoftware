@@ -16,6 +16,10 @@ export const DELETE:RequestHandler = async (event) => {
    if(!userId) {
       return new Response('User Id not provided', {status: 400});
    }
+   await fetch('/destroyDemo', {
+      method: 'POST',
+      body: JSON.stringify({userId})
+   })
    await prisma.verification.deleteMany({
       where: {
          userId
