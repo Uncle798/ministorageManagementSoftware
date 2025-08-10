@@ -2,11 +2,12 @@
 	import UserAdmin from '$lib/displayComponents/UserAdmin.svelte';
 	import { Modal } from '@skeletonlabs/skeleton-svelte';
    import type { PageData } from './$types';
+	import Header from '$lib/Header.svelte';
 
    let { data }: { data: PageData } = $props();
-   let descriptionModalOpen = $state(true)
 
 </script>
+<Header title='All users' />
 {#await data.usersPromise}
    <div class="mt-14 sm:mt-10">Loading users...</div>
 {:then users}
