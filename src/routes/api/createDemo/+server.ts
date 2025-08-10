@@ -126,6 +126,9 @@ export const POST: RequestHandler = async (event) => {
                      gitRepository: {
                         type: 'github',
                         repo: 'mmsWebsiteSvelte5',
+                     },
+                     ssoProtection:{
+                        deploymentType: 'preview'
                      }
                   }
                })
