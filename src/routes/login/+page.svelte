@@ -51,7 +51,7 @@
    })
 </script>
 <Header title="Login" />
-<div class="m-2 mt-9" in:fade={{duration:600}}>
+<div class="m-2 sm:mt-11 mt-12" in:fade={{duration:600}}>
    <p class="h2 ">Please enter your email to login </p>
    <div class="h4">
       <FormMessage message={$message} />
