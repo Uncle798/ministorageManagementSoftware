@@ -1,6 +1,5 @@
 <script lang="ts">
 	import UserAdmin from '$lib/displayComponents/UserAdmin.svelte';
-	import { Modal } from '@skeletonlabs/skeleton-svelte';
    import type { PageData } from './$types';
 	import Header from '$lib/Header.svelte';
 
