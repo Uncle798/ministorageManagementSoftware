@@ -13,12 +13,12 @@ export const GET: RequestHandler = async ({request, fetch}) => {
    let numDemosYesterday = 0;
    for(const demo of demos){
       if(dayjs().diff(demo.updatedAt, 'hours') >= 24){
-         await fetch('/api/destroyDemo', {
-            method: 'POST',
-            body: JSON.stringify({
-               userId:demo.userId
-            })
-         })
+         // await fetch('/api/destroyDemo', {
+         //    method: 'POST',
+         //    body: JSON.stringify({
+         //       userId:demo.userId
+         //    })
+         // })
       }
       if(demo.createdAt.getDate() === dayjs().subtract(1, 'day').toDate().getDate()){
          numDemosYesterday += 1;
