@@ -149,7 +149,7 @@ export const POST: RequestHandler = async (event) => {
                      requestBody: {
                         key: envVar[0].substring(envVar[0].indexOf('_')+1),
                         value: envVar[1],
-                        type: 'plain', 
+                        type:'sensitive', 
                         target: ['development', 'preview', 'production']
                      }
                   })
