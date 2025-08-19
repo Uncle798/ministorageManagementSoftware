@@ -153,6 +153,9 @@ export const POST: RequestHandler = async (event) => {
                         target: ['development', 'preview', 'production']
                      }
                   })
+                  if(envVar[0].includes('DEV_ME_KEY')){
+                     console.log(envVar[0] ,envVar[1])
+                  }
                   emit('message', `${envVar[0].substring(envVar[0].indexOf('_')+1)} variable created`)
                }
             }
