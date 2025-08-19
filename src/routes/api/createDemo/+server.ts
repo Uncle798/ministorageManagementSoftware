@@ -150,7 +150,7 @@ export const POST: RequestHandler = async (event) => {
                         key: envVar[0].substring(envVar[0].indexOf('_')+1),
                         value: envVar[1],
                         type:'sensitive', 
-                        target: ['development', 'preview', 'production']
+                        target: [ 'preview', 'production']
                      }
                   })
                   if(envVar[0].includes('DEV_ME_KEY')){
