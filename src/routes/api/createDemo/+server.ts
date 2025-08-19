@@ -148,7 +148,7 @@ export const POST: RequestHandler = async (event) => {
                      upsert: 'true',
                      requestBody: {
                         key: envVar[0].substring(envVar[0].indexOf('_')+1),
-                        value: envVar[1],
+                        value: typeof envVar[1] === 'string' ? envVar[1].trim() : JSON.stringify(envVar[1]),
                         type:'sensitive', 
                         target: [ 'preview', 'production']
                      }
