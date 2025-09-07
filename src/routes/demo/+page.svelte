@@ -56,8 +56,19 @@
       {:else}
          Status: {$value}
       {/if}
+      {#if typeof countdown === 'number' && countdown > 0}
+         
       <p>
          Come back in about {countdown} seconds and we'll have built something just for you.
       </p>
+      {:else if $value.includes('ERROR')}
+         <p>
+            There's been an error {$value}
+         </p>
+      {:else}
+         <p>
+            Come back in a few seconds and we'll have built something just for you.
+         </p>
+      {/if}
    {/if}
 </div>
