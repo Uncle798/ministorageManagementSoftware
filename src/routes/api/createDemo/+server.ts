@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import { prisma } from '$lib/server/prisma';
 import { neonClient } from '$lib/server/neon';
 import { NEON_PROJECT_ID, NEON_API_ROLE_PASSWORD } from '$env/static/private';
-import { EndpointType } from '@neondatabase/api-client';
+import { EndpointState, EndpointType } from '@neondatabase/api-client';
 import { vercelClient } from '$lib/server/vercel';
 import { generateSessionToken,} from '$lib/server/authUtils';
 import * as softwareEnvVars from '$env/static/private'
@@ -53,11 +53,12 @@ export const POST: RequestHandler = async (event) => {
             }
             const branchList = await neonClient.listProjectBranches({
                projectId: NEON_PROJECT_ID
-            })
+            });
+            console.log('branchList.data', branchList.data)
             let branch;
             let endpoint;
             for(const b of branchList.data.branches){
-               if(b.id === dbBranch.neonId){
+               if(b.name === dbBranch.id){
                   branch = await neonClient.getProjectBranch(NEON_PROJECT_ID, b.id);
                   const endpointList = await neonClient.listProjectEndpoints(NEON_PROJECT_ID);
                   for(const eP of endpointList.data.endpoints){
@@ -67,6 +68,7 @@ export const POST: RequestHandler = async (event) => {
                   }
                }
             }
+            let role;
             if(!branch){
                branch = await neonClient.createProjectBranch(NEON_PROJECT_ID, {
                   endpoints: [
@@ -78,11 +80,39 @@ export const POST: RequestHandler = async (event) => {
                      }
                   ],
                   branch: {
-                     parent_id: 'ep-patient-surf-afqq5zo4',
-                     name: dbBranch.id
+                     parent_id: 'br-crimson-band-afkt19lj',
+                     name: dbBranch.id,
+                  },
+               })
+               const waitForBranchReady = async (branchId:string) => {
+                  let branchStatus;
+                  do{
+                     const branch = await neonClient.getProjectBranch(NEON_PROJECT_ID, branchId);
+                     branchStatus = branch.data.branch.current_state;
+                     console.log(branchStatus)
+                     if(branchStatus !== 'ready'){
+                        await new Promise(resolve => setTimeout(resolve, 1000))
+                     }
+                  } while(branchStatus !== 'ready')
+               }
+               await waitForBranchReady(branch.data.branch.id)
+               endpoint = await neonClient.getProjectEndpoint(NEON_PROJECT_ID, branch.data.endpoints[0].id);
+               const waitForEndPointReady = async (endpointId:string) => {
+                  let endpointStatus:EndpointState;
+                  do{
+                     const endpoint = await neonClient.getProjectEndpoint(NEON_PROJECT_ID, endpointId);
+                     endpointStatus = endpoint.data.endpoint.current_state;
+                     if(endpointStatus === EndpointState.Init){
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                     }
+                  }while (endpointStatus === EndpointState.Init)
+               }
+               await waitForEndPointReady(endpoint.data.endpoint.id)
+               role = await neonClient.createProjectBranchRole(NEON_PROJECT_ID, branch.data.branch.id, {
+                  role: {
+                     name: 'api',
                   }
                })
-               endpoint = await neonClient.getProjectEndpoint(NEON_PROJECT_ID, branch.data.endpoints[0].id)
             }
             dbBranch = await prisma.databaseBranch.update({
                where: {
@@ -153,9 +183,6 @@ export const POST: RequestHandler = async (event) => {
                         target: [ 'preview', 'production']
                      }
                   })
-                  if(envVar[0].includes('DEV_ME_KEY')){
-                     console.log(envVar[0] ,envVar[1])
-                  }
                   emit('message', `${envVar[0].substring(envVar[0].indexOf('_')+1)} variable created`)
                }
             }
@@ -164,7 +191,7 @@ export const POST: RequestHandler = async (event) => {
                upsert: 'true',
                requestBody: {
                   key: 'POSTGRES_PRISMA_URL',
-                  value: `postgresql://api:${NEON_API_ROLE_PASSWORD}@${dbBranch.url}/Demo01?sslmode=require&channel_binding=require`,
+                  value: `postgresql://api:${role?.data.role.password}@${dbBranch.url}/neondb?sslmode=require&channel_binding=require`,
                   type: 'plain',
                   target: ['development', 'preview', 'production']
                }
@@ -278,7 +305,7 @@ export const POST: RequestHandler = async (event) => {
                emit('alias', alias);
             }
          } catch (error) {
-            console.error(error);
+            // console.error(error);
          }
          return function cancel(){}
       })
