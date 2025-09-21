@@ -65,9 +65,11 @@ export const POST: RequestHandler = async (event) => {
                }
             })
             if(dbBranches){
-               for(const branch of dbBranches){
-                  if(branch.neonId){
-                     await neonClient.deleteProjectBranch(NEON_PROJECT_ID, branch.neonId);
+               const branchList = await neonClient.listProjectBranches({projectId: NEON_PROJECT_ID})
+               for(const dbBranch of dbBranches){
+                  const neonBranch = branchList.data.branches.find(branch => branch.name === dbBranch.id);
+                  if(neonBranch){
+                     neonClient.deleteProjectBranch(NEON_PROJECT_ID, neonBranch.id)
                   }
                }
                await prisma.databaseBranch.deleteMany({
