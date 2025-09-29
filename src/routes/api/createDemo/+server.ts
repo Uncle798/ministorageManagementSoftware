@@ -89,7 +89,6 @@ export const POST: RequestHandler = async (event) => {
                   do{
                      const branch = await neonClient.getProjectBranch(NEON_PROJECT_ID, branchId);
                      branchStatus = branch.data.branch.current_state;
-                     console.log(branchStatus)
                      if(branchStatus !== 'ready'){
                         await new Promise(resolve => setTimeout(resolve, 1000))
                      }
@@ -210,6 +209,7 @@ export const POST: RequestHandler = async (event) => {
                {key: 'PUBLIC_COMPANY_NAME', value: event.locals.user!.companyName!},
                {key: 'PUBLIC_COMPANY_EMAIL', value: event.locals.user!.email},
                {key: 'PUBLIC_PHONE', value: '15551234567'},
+               {key: 'PUBLIC_ADDRESS1', value: '5555 S Main St.'},
                {key: 'DEMO_SESSION_TOKEN', value: token},
                {key: 'PUBLIC_URL', value: url}
             ]
