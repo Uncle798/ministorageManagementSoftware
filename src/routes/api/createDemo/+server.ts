@@ -13,7 +13,7 @@ export const POST: RequestHandler = async (event) => {
    if(!event.locals.user){
       return new Response(JSON.stringify('Must be logged into to create demo'));
    } else {
-      const url = `demo-${event.locals.user!.familyName.toLowerCase()}-${event.locals.user!.givenName.toLowerCase()}.ministoragemanagementsoftware.com`;
+      const url = `demo-${event.locals.user.familyName.toLowerCase()}-${event.locals.user.givenName.toLowerCase()}.ministoragemanagementsoftware.com`;
       return produce(async function start({emit}) {
          emit('message', 'Creating database');
          try{
@@ -54,7 +54,6 @@ export const POST: RequestHandler = async (event) => {
             const branchList = await neonClient.listProjectBranches({
                projectId: NEON_PROJECT_ID
             });
-            console.log('branchList.data', branchList.data)
             let branch;
             let endpoint;
             for(const b of branchList.data.branches){
@@ -239,7 +238,7 @@ export const POST: RequestHandler = async (event) => {
                      gitSource: {
                         org: 'Uncle798',
                         repo: 'mmsWebsiteSvelte5',
-                        ref: 'Demo',
+                        ref: 'main',
                         type: 'github'
                      }
                   }
