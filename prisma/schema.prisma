@@ -20,7 +20,7 @@ model User {
   email            String             @unique()
   givenName        String
   familyName       String
-  companyName      String?
+  companyName      String
   emailVerified    Boolean            @default(false)
   admin            Boolean            @default(false)
   googleId         String?
