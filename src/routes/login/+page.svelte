@@ -9,7 +9,10 @@
    import Header from '$lib/Header.svelte';
    import { fade } from 'svelte/transition';
    
-   export let data: PageData;
+   interface Props {
+      data: PageData;
+   }
+   let { data }:Props =$props();
    let { form, message, errors, constraints, enhance, delayed, timeout } = superForm(data.magicLinkForm);
    const toastReason = data.toastReason;
    onMount(() => {

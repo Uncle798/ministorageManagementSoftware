@@ -2,7 +2,7 @@ import { produce } from 'sveltekit-sse'
 import type { RequestHandler } from './$types';
 import { prisma } from '$lib/server/prisma';
 import { neonClient } from '$lib/server/neon';
-import { NEON_PROJECT_ID, NEON_API_ROLE_PASSWORD } from '$env/static/private';
+import { NEON_PROJECT_ID } from '$env/static/private';
 import { EndpointState, EndpointType } from '@neondatabase/api-client';
 import { vercelClient } from '$lib/server/vercel';
 import { generateSessionToken,} from '$lib/server/authUtils';
@@ -304,7 +304,7 @@ export const POST: RequestHandler = async (event) => {
                emit('alias', alias);
             }
          } catch (error) {
-            // console.error(error);
+            console.error(error);
          }
          return function cancel(){}
       })

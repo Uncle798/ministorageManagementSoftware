@@ -63,12 +63,12 @@
    {#if mounted}
       <form method="POST" action="/register/emailVerification?/verify&redirect={redirect}" use:enhance>
          <TextInput
-         label="Code: "
-         name="code"
-         bind:value={$form.code}
-         errors={$errors.code}
-         constraints={$constraints.code}
-         placeholder='12345678'
+            label="Code: "
+            name="code"
+            bind:value={$form.code}
+            errors={$errors.code}
+            constraints={$constraints.code}
+            placeholder='12345678'
          />
          <FormProgress delayed={$delayed} timeout={$timeout}/>
       </form>

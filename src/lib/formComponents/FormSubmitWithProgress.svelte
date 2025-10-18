@@ -1,5 +1,6 @@
 <script lang='ts'>
-   import { Progress, ProgressRing } from "@skeletonlabs/skeleton-svelte";
+   import ProgressLine from "$lib/displayComponents/ProgressLine.svelte";
+   import ProgressRing from "$lib/displayComponents/ProgressRing.svelte";
 	import { fade } from "svelte/transition";
    interface Props {
       delayed: boolean,
@@ -13,12 +14,12 @@
    <button class="btn rounded-lg preset-filled-primary-50-950 text-wrap h-fit sm:w-full" >{buttonText}</button>
    {#if delayed && !timeout}
    <div transition:fade={{duration:600}}>
-      <ProgressRing value={null} size="size-8" strokeWidth="6px" meterStroke="stroke-secondary-600-400" trackStroke="stroke-secondary-50-950" classes='ml-2' />
+      <ProgressRing value={null} classes='mx-1' />
    </div>
    {/if}
    {#if timeout}
    <div transition:fade={{duration:600}}>
-      <Progress value={null} width="size-8" classes='mt-2 ml-2' />
+      <ProgressLine value={null} />
    </div>
    {/if}
 </div>
